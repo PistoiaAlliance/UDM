@@ -808,7 +808,7 @@
   </xs:element>
 
   <!-- NOTE (v. 5.0.1): Added format attribute. -->
-  <xs:element name="RXNSTRUCTURE" type="xs:string">
+  <xs:element name="RXNSTRUCTURE">
     <xs:annotation>
       <xs:documentation>
         The diagram of the reaction represented an MDL RXN block, RInChI
