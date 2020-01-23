@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Pistoia Alliance UDM XML Schema.
+
+    Copyright (c) Pistoia Alliance, 2018-2020.
+
+    Licensor hereby grants you the right, without charge, on a perpetual,
+    non-exclusive and worldwide basis, to utilize this UDM XML Schema
+    Definition (and the UDM File Format based on it) for the purpose of
+    developing, making, having made, using, marketing, importing, offering to
+    sell or license, and selling or licensing, and to otherwise distribute
+    products complying with the Definition, in all cases subject to the
+    conditions set forth in this Agreement and any relevant patent and other
+    intellectual property rights of third parties (which may include members
+    of Licensor). This license grant does not include the right to sublicense,
+    modify the format or create derivative works of the Definition that are
+    not compatible with the UDM File Format, except that licensee may provide
+    additional requirements for content included in the SECTION element
+    provided that such requirements still validate against the UDM XML schema.
+    For the avoidance of doubt, products implementing this Definition are not
+    deemed to be derivative works of the UDM XML Schema Definition.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="6.0.0">
+
+  <!--
+      The UDM unit vocabularies are defined in as separate file to minimise
+      changes in the main UDM XML schema file between version 5.x and 6.x.
+
+      The individual methods are from Allotrope Foundation Taxonomies (AFT)
+      and on based preferred labels for physical characterization assay
+      entities:
+       * AFO-2019_09/afo/voc/afo/WD/2019/09/aft.ttl
+    -->
+
+  <xs:simpleType name="method">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="methodSpectrometry" />
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="methodThermalAnalysis" />
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="methodReciprocalSpace" />
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="methodMagneticResonance" />
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="methodVolumeImagingAssay" />
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="methodSpectrometry">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Auger electron appearance potential spectroscopy" />
+      <xs:enumeration value="Auger electron spectroscopy" />
+      <xs:enumeration value="Auger-photoelectron coincidence spectroscopy" />
+      <xs:enumeration value="Fourier transform electrochemical-induced impedance spectroscopy" />
+      <xs:enumeration value="Fourier transform infrared photoacoustic spectroscopy" />
+      <xs:enumeration value="Kelvin force spectroscopy" />
+      <xs:enumeration value="Kerr effect spectroscopy" />
+      <xs:enumeration value="Mossbauer spectroscopy" />
+      <xs:enumeration value="Raman circular dichroism spectroscopy" />
+      <xs:enumeration value="Raman spectroscopy" />
+      <xs:enumeration value="Raman-induced Kerr effect spectroscopy" />
+      <xs:enumeration value="Rutherford backscattering spectroscopy" />
+      <xs:enumeration value="X-ray absorption fine structure spectroscopy" />
+      <xs:enumeration value="X-ray absorption spectroscopy" />
+      <xs:enumeration value="X-ray appearance potential spectroscopy" />
+      <xs:enumeration value="X-ray bremsstrahlung isochromat spectroscopy" />
+      <xs:enumeration value="X-ray emission spectroscopy" />
+      <xs:enumeration value="X-ray excited electron appearance potential spectroscopy" />
+      <xs:enumeration value="X-ray magnetic circular dichroism spectroscopy" />
+      <xs:enumeration value="X-ray microemission spectroscopy" />
+      <xs:enumeration value="X-ray microprobe spectroscopy" />
+      <xs:enumeration value="X-ray photoelectron spectroscopy" />
+      <xs:enumeration value="X-ray reflection spectroscopy" />
+      <xs:enumeration value="X-ray spectroscopy" />
+      <xs:enumeration value="X-ray-ultraviolet photoelectron spectroscopy" />
+      <xs:enumeration value="acoustic emission spectrometry" />
+      <xs:enumeration value="alpha-particle X-ray spectroscopy" />
+      <xs:enumeration value="alpha-particle spectroscopy" />
+      <xs:enumeration value="alternating current force spectroscopy" />
+      <xs:enumeration value="alternating current impedance spectroscopy" />
+      <xs:enumeration value="angle-resolved X-ray photoelectron spectroscopy" />
+      <xs:enumeration value="angle-resolved bremsstrahlung isochromat spectroscopy" />
+      <xs:enumeration value="angle-resolved electron-electron coincidence spectroscopy" />
+      <xs:enumeration value="angle-resolved electron-electron ion coincidence spectroscopy" />
+      <xs:enumeration value="angle-resolved photoelectron extended fine structure spectroscopy" />
+      <xs:enumeration value="angle-resolved photoelectron spectroscopy" />
+      <xs:enumeration value="angle-resolved secondary electron spectroscopy" />
+      <xs:enumeration value="angle-resolved synchotron radiation photoelectron spectroscopy" />
+      <xs:enumeration value="angle-resolved ultraviolet photoelectron spectroscopy" />
+      <xs:enumeration value="appearance potential spectroscopy" />
+      <xs:enumeration value="attenuated total reflectance Fourier transform infrared spectroscopy" />
+      <xs:enumeration value="attenuated total reflectance infrared spectroscopy" />
+      <xs:enumeration value="beta-particle spectroscopy" />
+      <xs:enumeration value="bremsstrahlung isochromat spectroscopy" />
+      <xs:enumeration value="cavity enhanced absorption spectroscopy" />
+      <xs:enumeration value="cavity ring-down spectroscopy" />
+      <xs:enumeration value="characteristic energy-loss spectroscopy" />
+      <xs:enumeration value="chemiluminescence spectroscopy" />
+      <xs:enumeration value="circular dichroism spectroscopy" />
+      <xs:enumeration value="collinear fast atom-beam spectroscopy" />
+      <xs:enumeration value="collinear fast ion-beam laser spectroscopy" />
+      <xs:enumeration value="collinear laser ion-beam spectroscopy" />
+      <xs:enumeration value="collinear laser spectroscopy" />
+      <xs:enumeration value="concentration modulated absorption spectroscopy" />
+      <xs:enumeration value="constant-final-state spectroscopy" />
+      <xs:enumeration value="constant-initial-state spectroscopy" />
+      <xs:enumeration value="degenerate four-wave mixing spectroscopy" />
+      <xs:enumeration value="depth-selective photoelectron spectroscopy" />
+      <xs:enumeration value="dichroism spectroscopy" />
+      <xs:enumeration value="diffuse reflectance circular dichroism spectroscopy" />
+      <xs:enumeration value="diffuse reflectance infrared Fourier transform spectroscopy" />
+      <xs:enumeration value="diffuse reflectance infrared spectroscopy" />
+      <xs:enumeration value="diffuse reflectance laser flash photolysis" />
+      <xs:enumeration value="direct laser absorption spectroscopy" />
+      <xs:enumeration value="direct recoil spectroscopy" />
+      <xs:enumeration value="disappearance potential spectroscopy" />
+      <xs:enumeration value="dynamic force spectroscopy" />
+      <xs:enumeration value="electric-field-induced second harmonic generation spectroscopy" />
+      <xs:enumeration value="electrochemical surface plasmon resonance spectroscopy" />
+      <xs:enumeration value="electrochemical-induced impedance spectroscopy" />
+      <xs:enumeration value="electron appearance potential fine structure analysis" />
+      <xs:enumeration value="electron coincidence spectroscopy" />
+      <xs:enumeration value="electron energy loss spectroscopy" />
+      <xs:enumeration value="electron probe X-ray microanalysis" />
+      <xs:enumeration value="electron scattering" />
+      <xs:enumeration value="electron spectroscopy" />
+      <xs:enumeration value="electron-electron coincidence spectroscopy" />
+      <xs:enumeration value="electron-electron-ion coincidence spectroscopy" />
+      <xs:enumeration value="electron-induced X-ray emission spectroscopy" />
+      <xs:enumeration value="electron-induced photoelectron spectroscopy" />
+      <xs:enumeration value="electron-ion coincidence spectroscopy" />
+      <xs:enumeration value="electronic circular dichroism spectroscopy" />
+      <xs:enumeration value="electronic spectroscopy" />
+      <xs:enumeration value="electronic sum-frequency generation spectroscopy" />
+      <xs:enumeration value="energy-dispersive X-ray emission spectroscopy" />
+      <xs:enumeration value="extended X-ray absorption fine structure spectroscopy" />
+      <xs:enumeration value="extended electron energy loss fine structure spectroscopy" />
+      <xs:enumeration value="far-infrared magnetic resonance spectroscopy" />
+      <xs:enumeration value="far-infrared spectroscopy" />
+      <xs:enumeration value="femtosecond Raman-induced Kerr effect spectroscopy" />
+      <xs:enumeration value="femtosecond laser flash photolysis" />
+      <xs:enumeration value="femtosecond optically-heterodyned Raman-induced Kerr effect spectroscopy" />
+      <xs:enumeration value="femtosecond pump-probe spectroscopy" />
+      <xs:enumeration value="femtosecond two-colour four-wave mixing spectroscopy" />
+      <xs:enumeration value="field emission electron spin-polarization spectroscopy" />
+      <xs:enumeration value="field-emission electron spectroscopy" />
+      <xs:enumeration value="flash photolysis" />
+      <xs:enumeration value="fluorescence detected circular dichroism spectroscopy" />
+      <xs:enumeration value="fluorescence spectroscopy" />
+      <xs:enumeration value="force spectroscopy" />
+      <xs:enumeration value="four-wave mixing spectroscopy" />
+      <xs:enumeration value="frequency modulation spectroscopy" />
+      <xs:enumeration value="gamma-ray scattering spectroscopy" />
+      <xs:enumeration value="gamma-ray spectroscopy" />
+      <xs:enumeration value="high-resolution X-ray photoelectron spectroscopy" />
+      <xs:enumeration value="high-resolution energy loss spectroscopy" />
+      <xs:enumeration value="high-resolution soft X-ray photoelectron spectroscopy" />
+      <xs:enumeration value="hole-burning spectroscopy" />
+      <xs:enumeration value="impedance spectroscopy" />
+      <xs:enumeration value="indirect laser absorption spectroscopy" />
+      <xs:enumeration value="inelastic electron tunneling spectroscopy" />
+      <xs:enumeration value="infrared absorption spectroscopy" />
+      <xs:enumeration value="infrared dichroism spectroscopy" />
+      <xs:enumeration value="infrared emission spectroscopy" />
+      <xs:enumeration value="infrared photoacoustic spectroscopy" />
+      <xs:enumeration value="infrared reflectance spectroscopy" />
+      <xs:enumeration value="infrared transmission spectroscopy" />
+      <xs:enumeration value="infrared-visible sum-frequency generation spectroscopy" />
+      <xs:enumeration value="intensity-modulated photocurrent spectroscopy" />
+      <xs:enumeration value="intensity-modulated photovoltage spectroscopy" />
+      <xs:enumeration value="intracavity laser absorption spectroscopy" />
+      <xs:enumeration value="inverse photoelectron spectroscopy" />
+      <xs:enumeration value="ion microprobe spectroscopy" />
+      <xs:enumeration value="ion spectroscopy" />
+      <xs:enumeration value="ion-beam spectroscopy" />
+      <xs:enumeration value="ion-mobility spectrometry" />
+      <xs:enumeration value="ionization spectroscopy" />
+      <xs:enumeration value="k-resolved inverse photoelectron spectroscopy" />
+      <xs:enumeration value="kinetic spectroscopy" />
+      <xs:enumeration value="laser absorption spectroscopy" />
+      <xs:enumeration value="laser dissociation spectroscopy" />
+      <xs:enumeration value="laser electric resonance spectroscopy" />
+      <xs:enumeration value="laser emission spectroscopy" />
+      <xs:enumeration value="laser flash photolysis" />
+      <xs:enumeration value="laser induced fluorescence spectroscopy" />
+      <xs:enumeration value="laser ionization spectroscopy" />
+      <xs:enumeration value="laser micro emission spectroscopy" />
+      <xs:enumeration value="laser microprobe spectroscopy" />
+      <xs:enumeration value="laser multiphoton ionization spectroscopy" />
+      <xs:enumeration value="laser spectroscopy" />
+      <xs:enumeration value="laser transient absorption spectroscopy" />
+      <xs:enumeration value="laser-enhanced ionization spectroscopy" />
+      <xs:enumeration value="laser-enhanced ionization spectroscopy" />
+      <xs:enumeration value="laser-induced impedance spectroscopy" />
+      <xs:enumeration value="linear dichroism spectroscopy" />
+      <xs:enumeration value="liquid scintillation counting" />
+      <xs:enumeration value="localized surface plasmon resonance spectroscopy" />
+      <xs:enumeration value="low-energy electron loss spectroscopy" />
+      <xs:enumeration value="low-energy radioactive ion-beam spectroscopy" />
+      <xs:enumeration value="luminescence spectroscopy" />
+      <xs:enumeration value="magnetic circular dichroism spectroscopy" />
+      <xs:enumeration value="magneto optical Kerr effect spectroscopy" />
+      <xs:enumeration value="magneto-optical rotatory dispersion" />
+      <xs:enumeration value="mass spectrometry" />
+      <xs:enumeration value="metastable de-excitation spectroscopy" />
+      <xs:enumeration value="metastable-quenched electron spectroscopy" />
+      <xs:enumeration value="microbeam particle-induced X-ray emission spectroscopy" />
+      <xs:enumeration value="microphotoluminescence spectroscopy" />
+      <xs:enumeration value="microwave spectroscopy" />
+      <xs:enumeration value="molecular nonthermal excitation spectroscopy" />
+      <xs:enumeration value="momentum-resolved bremsstrahlung spectroscopy" />
+      <xs:enumeration value="multiphoton dissociation spectroscopy" />
+      <xs:enumeration value="nanosecond laser flash photolysis" />
+      <xs:enumeration value="nanowire electron scattering" />
+      <xs:enumeration value="near-edge X-ray absorption fine structure spectroscopy" />
+      <xs:enumeration value="near-infrared magnetic circular dichroism spectroscopy" />
+      <xs:enumeration value="near-infrared reflectance spectroscopy" />
+      <xs:enumeration value="near-infrared surface plasmon resonance spectroscopy" />
+      <xs:enumeration value="neutron spectroscopy" />
+      <xs:enumeration value="non-resonant X-ray emission spectroscopy" />
+      <xs:enumeration value="nuclear magnetic resonance spectroscopy" />
+      <xs:enumeration value="nuclear spectroscopy" />
+      <xs:enumeration value="optical extinction spectroscopy" />
+      <xs:enumeration value="optical feedback cavity enhanced absorption spectroscopy" />
+      <xs:enumeration value="optical rotatory dispersion" />
+      <xs:enumeration value="optically-heterodyned Kerr effect spectroscopy" />
+      <xs:enumeration value="optically-heterodyned Raman-induced Kerr effect spectroscopy" />
+      <xs:enumeration value="optogalvanic spectroscopy" />
+      <xs:enumeration value="partial-yield spectroscopy" />
+      <xs:enumeration value="particle-induced X-ray emission spectroscopy" />
+      <xs:enumeration value="particle-induced gamma-ray emission spectroscopy" />
+      <xs:enumeration value="phosphorescence spectroscopy" />
+      <xs:enumeration value="photoacoustic spectroscopy" />
+      <xs:enumeration value="photocurrent spectroscopy" />
+      <xs:enumeration value="photodetachment photoelectron spectroscopy" />
+      <xs:enumeration value="photoelectron extended fine structure spectroscopy" />
+      <xs:enumeration value="photoelectron spectroscopy of adsorbed xenon" />
+      <xs:enumeration value="photoelectron spectroscopy" />
+      <xs:enumeration value="photoelectron yield spectroscopy" />
+      <xs:enumeration value="photoion-photoelectron coincidence spectroscopy" />
+      <xs:enumeration value="photoluminescence spectroscopy" />
+      <xs:enumeration value="photothermal spectroscopy" />
+      <xs:enumeration value="photovoltage spectroscopy" />
+      <xs:enumeration value="picosecond laser flash photolysis" />
+      <xs:enumeration value="polarization modulation infrared reflection-adsorption spectroscopy" />
+      <xs:enumeration value="polarization spectroscopy" />
+      <xs:enumeration value="positron annihilation lifetime spectroscopy" />
+      <xs:enumeration value="proton-induced X-ray emission spectroscopy" />
+      <xs:enumeration value="pump-dump-probe spectroscopy" />
+      <xs:enumeration value="pump-probe spectroscopy" />
+      <xs:enumeration value="pump-repump-probe spectroscopy" />
+      <xs:enumeration value="quick extended X-ray absorption fine structure spectroscopy" />
+      <xs:enumeration value="radio frequency spectroscopy" />
+      <xs:enumeration value="ratio variable angle polarized absorption spectroscopy" />
+      <xs:enumeration value="reflectance circular dichroism spectroscopy" />
+      <xs:enumeration value="reflectance spectroscopy" />
+      <xs:enumeration value="reflection extended X-ray absorption fine structure spectroscopy" />
+      <xs:enumeration value="reflection-absorption Fourier transform infrared spectroscopy" />
+      <xs:enumeration value="reflection-absorption infrared spectroscopy" />
+      <xs:enumeration value="resonance enhanced multiphoton dissociation spectroscopy" />
+      <xs:enumeration value="resonance enhanced multiphoton ionization spectrometry" />
+      <xs:enumeration value="resonance ion dissociation spectroscopy" />
+      <xs:enumeration value="resonance ionization spectroscopy" />
+      <xs:enumeration value="resonance ionization spectroscopy" />
+      <xs:enumeration value="resonance-enhanced laser microprobe spectroscopy" />
+      <xs:enumeration value="resonance-enhanced photoelectron spectroscopy" />
+      <xs:enumeration value="rotational spectroscopy" />
+      <xs:enumeration value="scanning tunnelling spectroscopy" />
+      <xs:enumeration value="scattering spectroscopy" />
+      <xs:enumeration value="second harmonic generation circular dichroism spectroscopy" />
+      <xs:enumeration value="secondary electron spectroscopy" />
+      <xs:enumeration value="single-particle energy-dispersive X-ray emission spectroscopy" />
+      <xs:enumeration value="site-selection spectroscopy" />
+      <xs:enumeration value="site-specific infrared dichroism spectroscopy" />
+      <xs:enumeration value="soft X-ray emission spectroscopy" />
+      <xs:enumeration value="soft X-ray photoelectron spectroscopy" />
+      <xs:enumeration value="spectrophotometry" />
+      <xs:enumeration value="spin-polarized inverse photoelectron spectrometry" />
+      <xs:enumeration value="spin-polarized metastable de-excitation spectroscopy" />
+      <xs:enumeration value="spin-polarized secondary electron spectroscopy" />
+      <xs:enumeration value="sum-frequency generation spectroscopy" />
+      <xs:enumeration value="super continuum cavity enhanced absorption spectroscopy" />
+      <xs:enumeration value="surface Penning-ionization electron spectroscopy" />
+      <xs:enumeration value="surface extended X-ray absorption fine structure spectroscopy" />
+      <xs:enumeration value="surface extended electron energy loss fine structure spectroscopy" />
+      <xs:enumeration value="surface plasmon resonance imaging" />
+      <xs:enumeration value="surface plasmon resonance spectroscopy" />
+      <xs:enumeration value="synchrotron circular dichroism spectroscopy" />
+      <xs:enumeration value="synchrotron radiation X-ray emission spectroscopy" />
+      <xs:enumeration value="synchrotron radiation excited X-ray spectroscopy" />
+      <xs:enumeration value="synchrotron radiation photoelectron spectroscopy" />
+      <xs:enumeration value="terahertz four-wave mixing spectroscopy" />
+      <xs:enumeration value="terahertz time-domain spectroscopy" />
+      <xs:enumeration value="thermal lens spectroscopy" />
+      <xs:enumeration value="thermoluminescence spectroscopy" />
+      <xs:enumeration value="time-resolved optical Kerr effect spectroscopy" />
+      <xs:enumeration value="total current spectroscopy" />
+      <xs:enumeration value="total reflection X-ray fluorescence spectroscopy" />
+      <xs:enumeration value="total-reflection X-ray absorption fine structure spectroscopy" />
+      <xs:enumeration value="transmission electron energy loss spectroscopy" />
+      <xs:enumeration value="transmission spectroscopy" />
+      <xs:enumeration value="tunable diode laser absorption spectroscopy" />
+      <xs:enumeration value="two-colour four-wave mixing spectroscopy" />
+      <xs:enumeration value="ultra soft X-ray emission spectroscopy" />
+      <xs:enumeration value="ultra-fast laser spectroscopy" />
+      <xs:enumeration value="ultraviolet bremsstrahlung isochromat spectroscopy" />
+      <xs:enumeration value="ultraviolet photoelectron spectroscopy" />
+      <xs:enumeration value="ultraviolet thermal lens spectroscopy" />
+      <xs:enumeration value="vacuum ultraviolet photoelectron spectroscopy" />
+      <xs:enumeration value="valence-shell photoionization spectroscopy" />
+      <xs:enumeration value="variable-angle polarized absorption spectroscopy" />
+      <xs:enumeration value="vibrational circular dichroism spectroscopy" />
+      <xs:enumeration value="vibrational electron energy loss spectroscopy" />
+      <xs:enumeration value="vibrational spectroscopy" />
+      <xs:enumeration value="visible thermal lens spectroscopy" />
+      <xs:enumeration value="wavelength dispersive X-ray spectroscopy" />
+      <xs:enumeration value="zero kinetic energy electron spectroscopy" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="methodThermalAnalysis">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="adiabatic scanning calorimetry" />
+      <xs:enumeration value="analytical solution calorimetry" />
+      <xs:enumeration value="batch injection calorimetry" />
+      <xs:enumeration value="calorimetry" />
+      <xs:enumeration value="cone calorimetry" />
+      <xs:enumeration value="continuous-flow calorimetry" />
+      <xs:enumeration value="differential scanning calorimetry" />
+      <xs:enumeration value="differential thermal analysis" />
+      <xs:enumeration value="dynamic scanning calorimetry" />
+      <xs:enumeration value="glass refractive index measurement" />
+      <xs:enumeration value="isobaric calorimetry" />
+      <xs:enumeration value="isothermal calorimetry" />
+      <xs:enumeration value="isothermal titration calorimetry" />
+      <xs:enumeration value="pressure perturbation calorimetry" />
+      <xs:enumeration value="pressure-controlled scanning calorimetry" />
+      <xs:enumeration value="scanning calorimetry" />
+      <xs:enumeration value="temperature-controlled scanning calorimetry" />
+      <xs:enumeration value="thermoacoustimetry" />
+      <xs:enumeration value="thermodilatometry" />
+      <xs:enumeration value="thermogravimetry" />
+      <xs:enumeration value="thermoluminescence" />
+      <xs:enumeration value="thermomagnetometry" />
+      <xs:enumeration value="thermophotometry" />
+      <xs:enumeration value="thermoptometry" />
+      <xs:enumeration value="thermorefractometry" />
+      <xs:enumeration value="thermosonimetry" />
+      <xs:enumeration value="volume perturbation calorimetry" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="methodReciprocalSpace">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Rayleigh scattering spectroscopy" />
+      <xs:enumeration value="Rutherford backscattering spectroscopy" />
+      <xs:enumeration value="X-ray diffraction" />
+      <xs:enumeration value="X-ray photoelectron diffraction" />
+      <xs:enumeration value="X-ray photon correlation spectroscopy" />
+      <xs:enumeration value="X-ray scattering" />
+      <xs:enumeration value="alpha-particle scattering" />
+      <xs:enumeration value="angle-resolved resonant X-ray scattering" />
+      <xs:enumeration value="anomalous X-ray scattering" />
+      <xs:enumeration value="anomalous wide-angle X-ray scattering" />
+      <xs:enumeration value="atom scattering" />
+      <xs:enumeration value="azimuthal photoelectron diffraction" />
+      <xs:enumeration value="coherent neutron scattering" />
+      <xs:enumeration value="convergent beam low energy electron diffraction" />
+      <xs:enumeration value="diffraction method" />
+      <xs:enumeration value="diffusing wave spectroscopy" />
+      <xs:enumeration value="dynamic light scattering" />
+      <xs:enumeration value="elastic incoherent neutron scattering" />
+      <xs:enumeration value="elastic low energy electron diffraction" />
+      <xs:enumeration value="elastic neutron scattering" />
+      <xs:enumeration value="elastic recoil detection analysis" />
+      <xs:enumeration value="electron backscatter diffraction" />
+      <xs:enumeration value="electron diffraction" />
+      <xs:enumeration value="electrophoretic light scattering" />
+      <xs:enumeration value="forced Rayleigh scattering spectroscopy" />
+      <xs:enumeration value="grazing incidence small-angle neutron scattering" />
+      <xs:enumeration value="grazing-incidence X-ray scattering" />
+      <xs:enumeration value="heavy-ion elastic recoil detection analysis" />
+      <xs:enumeration value="high energy electron diffraction" />
+      <xs:enumeration value="hyper Rayleigh scattering spectroscopy" />
+      <xs:enumeration value="incoherent neutron scattering" />
+      <xs:enumeration value="inelastic X-ray scattering" />
+      <xs:enumeration value="inelastic atom scattering" />
+      <xs:enumeration value="inelastic incoherent neutron scattering" />
+      <xs:enumeration value="inelastic low energy electron diffraction" />
+      <xs:enumeration value="inelastic neutron scattering" />
+      <xs:enumeration value="infrared thermal diffusion forced Rayleigh scattering" />
+      <xs:enumeration value="interferometric Rayleigh scattering spectroscopy" />
+      <xs:enumeration value="ion scattering" />
+      <xs:enumeration value="laser light scattering" />
+      <xs:enumeration value="light scattering" />
+      <xs:enumeration value="low energy electron diffraction" />
+      <xs:enumeration value="magnetic spin-echo small angle neutron scattering" />
+      <xs:enumeration value="multi-angle light scattering" />
+      <xs:enumeration value="near-resonance Rayleigh scattering spectroscopy" />
+      <xs:enumeration value="neutron backscattering" />
+      <xs:enumeration value="neutron diffraction" />
+      <xs:enumeration value="neutron powder diffraction" />
+      <xs:enumeration value="neutron scattering" />
+      <xs:enumeration value="neutron time-of-flight scattering" />
+      <xs:enumeration value="non-resonance Rayleigh scattering spectroscopy" />
+      <xs:enumeration value="normal photoelectron diffraction" />
+      <xs:enumeration value="photoelectron diffraction" />
+      <xs:enumeration value="photon cross correlation spectroscopy" />
+      <xs:enumeration value="pole figure measurement" />
+      <xs:enumeration value="quasi-elastic neutron scattering" />
+      <xs:enumeration value="reflection high energy electron diffraction" />
+      <xs:enumeration value="resonance Rayleigh scattering spectroscopy" />
+      <xs:enumeration value="resonance light scattering" />
+      <xs:enumeration value="resonant inelastic X-ray scattering" />
+      <xs:enumeration value="scattering method" />
+      <xs:enumeration value="small-angle X-ray scattering" />
+      <xs:enumeration value="small-angle light scattering" />
+      <xs:enumeration value="small-angle neutron scattering" />
+      <xs:enumeration value="spin-echo neutron scattering" />
+      <xs:enumeration value="spin-echo small angle neutron scattering" />
+      <xs:enumeration value="spin-echo wide angle neutron scattering" />
+      <xs:enumeration value="static light scattering" />
+      <xs:enumeration value="synchrotron X-ray scattering" />
+      <xs:enumeration value="synchrotron small angle X-ray scattering" />
+      <xs:enumeration value="thermal diffusion forced Rayleigh scattering" />
+      <xs:enumeration value="time-resolved resonance Rayleigh scattering" />
+      <xs:enumeration value="transmission high energy electron diffraction" />
+      <xs:enumeration value="transmission low energy electron diffraction" />
+      <xs:enumeration value="triple-axis neutron scattering" />
+      <xs:enumeration value="two-dimensional small-angle X-ray scattering" />
+      <xs:enumeration value="ultra small angle neutron scattering" />
+      <xs:enumeration value="ultra-small angle X-ray scattering" />
+      <xs:enumeration value="wide angle neutron scattering" />
+      <xs:enumeration value="wide-angle X-ray scattering" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="methodMagneticResonance">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="absorption detected magnetic resonance" />
+      <xs:enumeration value="continuous wave electron-electron double resonance spectroscopy" />
+      <xs:enumeration value="delayed emission detected magnetic resonance" />
+      <xs:enumeration value="delayed fluorescence detected magnetic resonance" />
+      <xs:enumeration value="electron magnetic resonance spectroscopy" />
+      <xs:enumeration value="electron nuclear double resonance spectroscopy" />
+      <xs:enumeration value="electron spin resonance spectroscopy" />
+      <xs:enumeration value="electron-electron double resonance spectroscopy" />
+      <xs:enumeration value="far-infrared magnetic resonance spectroscopy" />
+      <xs:enumeration value="fluorescence detected magnetic resonance" />
+      <xs:enumeration value="optically detected magnetic resonance" />
+      <xs:enumeration value="phosphorescence detected magnetic resonance" />
+      <xs:enumeration value="pulsed electron-electron double resonance spectroscopy" />
+      <xs:enumeration value="reaction yield detected magnetic resonance" />
+      <xs:enumeration value="relaxometry" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <xs:simpleType name="methodVolumeImagingAssay">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Fourier profilometry" />
+      <xs:enumeration value="chemical imaging" />
+      <xs:enumeration value="contact profilometry" />
+      <xs:enumeration value="electron spin resonance imaging" />
+      <xs:enumeration value="force spectroscopy mapping" />
+      <xs:enumeration value="holography" />
+      <xs:enumeration value="microscopy" />
+      <xs:enumeration value="microspectrophotometry" />
+      <xs:enumeration value="microspectroscopy" />
+      <xs:enumeration value="optical profilometry" />
+      <xs:enumeration value="phase profilometry" />
+      <xs:enumeration value="profilometry" />
+      <xs:enumeration value="thermography" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

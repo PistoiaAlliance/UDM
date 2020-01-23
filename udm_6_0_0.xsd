@@ -3,7 +3,7 @@
 
     Pistoia Alliance UDM XML Schema.
 
-    Copyright (c) Pistoia Alliance, 2018.
+    Copyright (c) Pistoia Alliance, 2018-2020.
 
     Licensor hereby grants you the right, without charge, on a perpetual,
     non-exclusive and worldwide basis, to utilize this UDM XML Schema
@@ -19,36 +19,45 @@
     additional requirements for content included in the SECTION element
     provided that such requirements still validate against the UDM XML schema.
     For the avoidance of doubt, products implementing this Definition are not
-    deemed to be derivative works of the UDM XML Schema Definition. 
-    
+    deemed to be derivative works of the UDM XML Schema Definition.
+
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="6.0.0">
+
+  <!--
+      NOTE: Work in progress as of January 2020.
+  -->
+
+  <xs:include schemaLocation="udm_6_0_0_countries.xsd" />
+  <xs:include schemaLocation="udm_6_0_0_methods.xsd" />
+  <xs:include schemaLocation="udm_6_0_0_units.xsd" />
+
   <xs:element name="UDM_VERSION">
     <xs:complexType>
       <xs:attribute name="MAJOR" type="xs:integer" use="required" fixed="6"/>
       <xs:attribute name="MINOR" use="required">
-	<xs:simpleType>
-	  <xs:restriction base="xs:integer">
-	    <xs:minInclusive value="0"/>
-	  </xs:restriction>
-	</xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="REVISION" use="required">
-	<xs:simpleType>
-	  <xs:restriction base="xs:integer">
-	    <xs:minInclusive value="0"/>
-	  </xs:restriction>
-	</xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="VERSIONTEXT" use="required">
-	<xs:simpleType>
-	  <xs:restriction base="xs:string">
-	    <xs:pattern value="6\.[0-9]*\.[0-9]*"/>
-	  </xs:restriction>
-	</xs:simpleType>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="6\.[0-9]*\.[0-9]*"/>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:attribute>
     </xs:complexType>
   </xs:element>
@@ -90,15 +99,47 @@
   <xs:complexType name="molarityType" mixed="false">
     <xs:simpleContent>
       <xs:extension base="xs:float">
-        <xs:attribute name="unit" type="xs:string" use="optional" default="mol/l" />
+        <xs:attribute name="unit" type="unitMolarConcentration" use="optional" default="mol/L" />
       </xs:extension>
     </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- NOTE Added in v 6.0.0. -->
+  <xs:complexType name="pageType" mixed="false">
+    <xs:sequence>
+      <xs:element name="start" type="xs:positiveInteger" />
+      <xs:element name="end" type="xs:positiveInteger" minOccurs="0" />
+    </xs:sequence>
   </xs:complexType>
 
   <!-- NOTE Added in v 5.0.0. -->
   <xs:complexType name="percentageType" mixed="false">
     <xs:simpleContent>
       <xs:extension base="xs:decimal">
+        <!-- <xs:minInclusive value="0.0"/> -->
+        <!-- <xs:maxInclusive value="100.0"/> -->
+        <xs:attribute name="unit" type="xs:string" use="optional" default="percent" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- NOTE Added in v 6.0.0. -->
+  <xs:simpleType name="decimalOrExcessType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:decimal" />
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="excess" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+
+  <xs:complexType name="equivalentType" mixed="false">
+    <xs:simpleContent>
+      <xs:extension base="decimalOrExcessType">
         <xs:attribute name="unit" type="xs:string" use="optional" default="percent" />
       </xs:extension>
     </xs:simpleContent>
@@ -108,7 +149,7 @@
   <xs:complexType name="massType" mixed="false">
     <xs:simpleContent>
       <xs:extension base="xs:decimal">
-        <xs:attribute name="unit" type="xs:string" use="optional" default="g" />
+        <xs:attribute name="unit" type="unitMass" use="optional" default="g" />
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
@@ -117,7 +158,7 @@
   <xs:complexType name="molType" mixed="false">
     <xs:simpleContent>
       <xs:extension base="xs:decimal">
-        <xs:attribute name="unit" type="xs:string" use="optional" default="mol" />
+        <xs:attribute name="unit" type="unitAmountOfSubstance" use="optional" default="mol" />
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
@@ -180,7 +221,7 @@
       <!-- exact value -->
       <xs:element name="exact" type="xs:float" />
     </xs:choice>
-    <xs:attribute name="unit" type="xs:string" use="optional" default="mol/l" />
+    <xs:attribute name="unit" type="unitMolarConcentration" use="optional" default="mol/L" />
   </xs:complexType>
 
   <!-- NOTE Modified in v 5.0.0. -->
@@ -194,7 +235,7 @@
       <!-- exact value -->
       <xs:element name="exact" type="xs:float" />
     </xs:choice>
-    <xs:attribute name="unit" type="xs:string" use="optional" default="Torr" />
+    <xs:attribute name="unit" type="unitPressureOrStress" use="optional" default="torr" />
   </xs:complexType>
 
   <!-- NOTE Modified in v 5.0.0. -->
@@ -217,7 +258,7 @@
       <!-- exact value -->
       <xs:element name="exact" type="xs:float" />
     </xs:choice>
-    <xs:attribute name="unit" type="xs:string" use="optional" default="degree_C" />
+    <xs:attribute name="unit" type="unitTemperature" use="optional" default="degC" />
   </xs:complexType>
 
   <!-- NOTE Added in v 6.0.0. -->
@@ -254,7 +295,7 @@
       <!-- exact value -->
       <xs:element name="exact" type="xs:float" />
     </xs:choice>
-    <xs:attribute name="unit" type="xs:string" use="optional" default="hour" />
+    <xs:attribute name="unit" type="unitTime" use="optional" default="hr" />
   </xs:complexType>
 
   <!-- NOTE Modified in v 5.0.0. -->
@@ -268,7 +309,7 @@
       <!-- exact value -->
       <xs:element name="exact" type="xs:float" />
     </xs:choice>
-    <xs:attribute name="unit" type="xs:string" use="optional" default="litre" />
+    <xs:attribute name="unit" type="unitVolume" use="optional" default="L" />
   </xs:complexType>
 
   <!-- NOTE Added in v 5.0.0. -->
@@ -295,8 +336,8 @@
   <xs:element name="sup">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -304,8 +345,8 @@
   <xs:element name="sub">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -318,11 +359,12 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="UDM_VERSION"/>
-	<xs:element ref="LEGAL" minOccurs="0"/>
-	<xs:element ref="CITATIONS" minOccurs="0"/>
-	<xs:element ref="MOLECULES" minOccurs="1"/>
-	<xs:element ref="REACTIONS" minOccurs="1"/>
+        <xs:element ref="UDM_VERSION"/>
+        <xs:element ref="LEGAL" minOccurs="0"/>
+        <xs:element ref="ORGANISATIONS" minOccurs="0"/>
+        <xs:element ref="CITATIONS" minOccurs="0"/>
+        <xs:element ref="MOLECULES"/>
+        <xs:element ref="REACTIONS"/>
       </xs:sequence>
       <xs:attribute name="DATABASE" type="xs:string" use="required"/>
       <xs:attribute name="SEQUENCE" type="xs:nonNegativeInteger" use="required"/>
@@ -338,15 +380,15 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element name="PRODUCER" type="xs:string" minOccurs="0"/>
-	<xs:element ref="TITLE" minOccurs="0"/>
+        <xs:element name="PRODUCER" type="xs:string" minOccurs="0"/>
+        <xs:element ref="TITLE" minOccurs="0"/>
         <!--
             In future we should include a regular expression for Digital
             Object Identifiers (DOIs), but it is not straightforward.
         -->
-	<xs:element name="DOI" type="xs:string" minOccurs="0"/>
-	<xs:element name="LICENSE" type="licenseData" minOccurs="0"/>
-	<xs:element name="COPYRIGHT" type="copyrightData" minOccurs="0"/>
+        <xs:element name="DOI" type="xs:string" minOccurs="0"/>
+        <xs:element name="LICENSE" type="licenseData" minOccurs="0"/>
+        <xs:element name="COPYRIGHT" type="copyrightData" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -368,6 +410,46 @@
     <xs:attribute name="href" type="xs:string" use="optional" />
   </xs:complexType>
 
+  <!-- New in 6.0.0 -->
+  <xs:element name="ORGANISATIONS">
+    <xs:annotation>
+      <xs:documentation>
+        The list of organisations associated with authors in citations and
+        reactions (as scientists).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ORGANISATION" type="organisationDetailsID" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="organisationDetails">
+    <xs:annotation>
+      <xs:documentation>
+        TODO
+     </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NAME" type="xs:string" />
+      <xs:element name="ADDRESS" type="xs:string" minOccurs="0" />
+      <xs:element name="COUNTRY" type="country" minOccurs="0" />
+      <xs:element name="URL" type="xs:anyURI" minOccurs="0" />
+      <xs:element name="EMAIL" type="xs:string" minOccurs="0" />
+      <xs:element name="PHONE" type="phoneNumber" minOccurs="0" />
+      <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="organisationDetailsID">
+    <xs:complexContent>
+      <xs:extension base="organisationDetails">
+        <xs:attribute name="ID" type="Id-Ref" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:element name="CITATIONS">
     <xs:annotation>
       <xs:documentation>
@@ -377,7 +459,7 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="CITATION" maxOccurs="unbounded"/>
+        <xs:element ref="CITATION" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -391,23 +473,23 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="TYPE" minOccurs="0"/>
-	<xs:element ref="AUTHOR" minOccurs="0"/>
-	<xs:element ref="TITLE" minOccurs="0"/>
-	<xs:element ref="JOURNAL" minOccurs="0"/>
-	<xs:element ref="YEAR" minOccurs="0"/>
-	<xs:element ref="VOL" minOccurs="0"/>
-	<xs:element ref="PAGE" minOccurs="0"/>
-	<xs:element ref="KEYWORD" minOccurs="0"/>
-	<xs:element ref="DOI" minOccurs="0"/>
-	<xs:element ref="PATENT_COUNTRY" minOccurs="0"/>
-	<xs:element ref="PATENT_NUMBER" minOccurs="0"/>
-	<xs:element ref="PATENT_ASSIGNEE" minOccurs="0"/>
-	<xs:element ref="PATENT_KIND_CODE" minOccurs="0"/>
-	<xs:element ref="PATENT_PUB_DATE" minOccurs="0"/>
-	<xs:element ref="ABSTRACT" minOccurs="0"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="TYPE" minOccurs="0"/>
+        <xs:element ref="AUTHORS" minOccurs="0"/>
+        <xs:element ref="TITLE" minOccurs="0"/>
+        <xs:element ref="JOURNAL" minOccurs="0"/>
+        <xs:element ref="YEAR" minOccurs="0"/>
+        <xs:element ref="VOL" minOccurs="0"/>
+        <xs:element ref="PAGE" minOccurs="0"/>
+        <xs:element ref="KEYWORD" minOccurs="0"/>
+        <xs:element ref="DOI" minOccurs="0"/>
+        <xs:element ref="PATENT_COUNTRY" minOccurs="0"/>
+        <xs:element ref="PATENT_NUMBER" minOccurs="0"/>
+        <xs:element ref="PATENT_ASSIGNEE" minOccurs="0"/>
+        <xs:element ref="PATENT_KIND_CODE" minOccurs="0"/>
+        <xs:element ref="PATENT_PUB_DATE" minOccurs="0"/>
+        <xs:element ref="ABSTRACT" minOccurs="0"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="ID" type="Id-Ref" use="required"/>
     </xs:complexType>
@@ -423,13 +505,43 @@
     </xs:annotation>
   </xs:element>
 
-  <xs:element name="AUTHOR" type="xs:string">
+  <xs:element name="AUTHORS">
     <xs:annotation>
       <xs:documentation>
-        The author or authors of the cited paper or patent.
+        The authors of the cited paper or patent.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="AUTHOR" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AUTHOR" type="authorDetails">
+    <xs:annotation>
+      <xs:documentation>
+        A single author of the cited paper or patent.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
+  <xs:complexType name="authorDetails">
+    <xs:sequence>
+      <xs:element name="NAME" type="xs:string" /> <!-- Required -->
+      <xs:element name="EMAIL" type="xs:string" minOccurs="0" />
+      <xs:element name="PHONE" type="phoneNumber" minOccurs="0" />
+      <xs:element name="ORGANISATION" type="organisationRef" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="organisationRef">
+    <xs:complexContent>
+      <xs:extension base="organisationDetails">
+        <xs:attribute name="ORG_ID" use="optional" type="Id-Ref" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
   <xs:element name="TITLE" type="xs:string">
     <xs:annotation>
@@ -446,7 +558,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-    
+
   <xs:element name="JOURNAL" type="xs:string">
     <xs:annotation>
       <xs:documentation>
@@ -454,7 +566,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-    
+
   <xs:element name="VOL" type="xs:string">
     <xs:annotation>
       <xs:documentation>
@@ -471,7 +583,7 @@
     </xs:annotation>
   </xs:element>
 
-  <xs:element name="PAGE" type="xs:string">
+  <xs:element name="PAGE" type="pageType">
     <xs:annotation>
       <xs:documentation>
         The page number or page number range in the JOURNAL where the cited
@@ -491,12 +603,12 @@
   <xs:element name="KEYWORD" type="xs:string">
     <xs:annotation>
       <xs:documentation>
-        Keywords associated with the cited paper. 
+        Keywords associated with the cited paper.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-    
-  <xs:element name="PATENT_COUNTRY" type="xs:string">
+
+  <xs:element name="PATENT_COUNTRY" type="country">
     <xs:annotation>
       <xs:documentation>
         The country where the cited patent was issued.
@@ -520,7 +632,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-    
+
   <xs:element name="PATENT_KIND_CODE" type="xs:string">
     <xs:annotation>
       <xs:documentation>
@@ -540,9 +652,9 @@
   <xs:element name="COMMENT">
     <xs:complexType>
       <xs:simpleContent>
-	<xs:extension base="xs:string">
-	  <xs:attribute name="TYPE" type="xs:string"/>
-	</xs:extension>
+        <xs:extension base="xs:string">
+          <xs:attribute name="TYPE" type="xs:string"/>
+        </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
@@ -559,44 +671,61 @@
   <xs:element name="MOLECULES">
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="MOLECULE" maxOccurs="unbounded"/>
+        <xs:element ref="MOLECULE" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="MOLECULE">
-    <xs:complexType>
-      <xs:sequence>
-	<xs:element ref="MOLSTRUCTURE" minOccurs="0" maxOccurs="unbounded" />
-	<xs:element ref="MW" minOccurs="0"/>
-	<xs:element ref="CLP" minOccurs="0"/>
-	<xs:element ref="PSA" minOccurs="0"/>
-	<xs:element ref="HEV" minOccurs="0"/>
-	<xs:element ref="RTB" minOccurs="0"/>
-	<xs:element ref="HBD" minOccurs="0"/>
-	<xs:element ref="HBA" minOccurs="0"/>
-	<xs:element ref="NOC" minOccurs="0"/>
-	<xs:element ref="RNG" minOccurs="0"/>
-        <!-- NOTE Added in v 5.0.0. -->
-        <xs:element ref="PROPERTY" minOccurs="0" />
-	<xs:element ref="CC_ID" minOccurs="0"/>
-	<xs:element ref="MF" minOccurs="0"/>
-	<xs:element ref="NAME" minOccurs="0"/>
-	<xs:element ref="CAS" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="IDENTIFIER" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="LINK" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SYNONYM" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="CALCULATED" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element name="CIT_ID" type="Id-Ref" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
-      </xs:sequence>
-      <xs:attribute name="ID" type="Id-Ref" use="required"/>
-      <xs:attribute name="CIT_ID" type="Id-Ref"/>
-      <!--Put Action="delete" if you want to delete the item-->
-      <xs:attribute name="Action" type="xs:string"/>
-    </xs:complexType>
-  </xs:element>
+  <xs:element name="MOLECULE" type="moleculeDetailsID" />
+ 
+  <xs:complexType name="moleculeDetails">
+    <xs:sequence>
+      <xs:element ref="MOLSTRUCTURE" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="MW" minOccurs="0"/>
+      <xs:element ref="CLP" minOccurs="0"/>
+      <xs:element ref="PSA" minOccurs="0"/>
+      <xs:element ref="HEV" minOccurs="0"/>
+      <xs:element ref="RTB" minOccurs="0"/>
+      <xs:element ref="HBD" minOccurs="0"/>
+      <xs:element ref="HBA" minOccurs="0"/>
+      <xs:element ref="NOC" minOccurs="0"/>
+      <xs:element ref="RNG" minOccurs="0"/>
+      <!-- NOTE Added in v 5.0.0. -->
+      <xs:element ref="PROPERTY" minOccurs="0" />
+      <xs:element ref="CC_ID" minOccurs="0"/>
+      <xs:element ref="MF" minOccurs="0"/>
+      <xs:element ref="NAME" minOccurs="0"/>
+      <xs:element ref="CAS" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="IDENTIFIER" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="LINK" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="SYNONYM" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="CALCULATED" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="CIT_ID" type="Id-Ref" minOccurs="0" maxOccurs="unbounded"/>
+      <!-- EHS is reserved for future use - Environment and Health Safety data. -->
+      <xs:element name="EHS" minOccurs="0" />
+      <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="CIT_ID" type="Id-Ref"/>
+    <!--Put Action="delete" if you want to delete the item-->
+    <xs:attribute name="Action" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="moleculeDetailsID">
+    <xs:complexContent>
+      <xs:extension base="moleculeDetails">
+        <xs:attribute name="ID" type="Id-Ref" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="moleculeRef">
+    <xs:complexContent>
+      <xs:extension base="moleculeDetails">
+        <xs:attribute name="MOL_ID" use="optional" type="Id-Ref" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
   <xs:element name="MOLSTRUCTURE">
     <xs:complexType>
@@ -626,8 +755,8 @@
     </xs:annotation>
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -649,7 +778,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-  
+
   <!-- NOTE (v 4.0.0): Added default unit for PSA. -->
   <xs:element name="PSA" type="psaType">
     <xs:annotation>
@@ -739,8 +868,8 @@
     </xs:annotation>
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -753,8 +882,8 @@
     </xs:annotation>
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -762,8 +891,8 @@
   <xs:element name="CALCULATED">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
       <xs:attribute name="TYPE" type="xs:string"/>
     </xs:complexType>
@@ -772,8 +901,8 @@
   <xs:element name="LINK">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
       <xs:attribute name="TYPE" type="xs:string"/>
     </xs:complexType>
@@ -782,8 +911,8 @@
   <xs:element name="IDENTIFIER">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
       <xs:attribute name="TYPE" type="xs:string"/>
     </xs:complexType>
@@ -797,7 +926,7 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="REACTION" maxOccurs="unbounded"/>
+        <xs:element ref="REACTION" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -811,18 +940,18 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="RXNSTRUCTURE" minOccurs="0"/>
-	<xs:element ref="RANK" minOccurs="0"/>
-	<xs:element ref="MW_LARGEST_PRODUCT" minOccurs="0"/>
-	<xs:element ref="SORT_CREATION_DATE" minOccurs="0"/>
-	<xs:element ref="SORT_REACTION_SCALE" minOccurs="0"/>
-	<xs:element ref="SORT_REACTION_MOLARITY" minOccurs="0"/>
-	<xs:element ref="SORT_TOTAL_VOLUME" minOccurs="0"/>
-	<xs:element ref="METABOLITE_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="REACTANT_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="PRODUCT_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="VARIATION" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="RXNSTRUCTURE" minOccurs="0"/>
+        <xs:element ref="RANK" minOccurs="0"/>
+        <xs:element ref="MW_LARGEST_PRODUCT" minOccurs="0"/>
+        <xs:element ref="SORT_CREATION_DATE" minOccurs="0"/>
+        <xs:element ref="SORT_REACTION_SCALE" minOccurs="0"/>
+        <xs:element ref="SORT_REACTION_MOLARITY" minOccurs="0"/>
+        <xs:element ref="SORT_TOTAL_VOLUME" minOccurs="0"/>
+        <xs:element ref="METABOLITE_ID" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="REACTANT_ID" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="PRODUCT_ID" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="VARIATION" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="ID" type="Id-Ref" use="required"/>
       <!--Put Action="delete" if you want to delete the item-->
@@ -855,7 +984,7 @@
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
-  
+
   <xs:element name="RANK" type="xs:integer"/>
 
   <!-- NOTE (v 4.0.0): MW_LARGEST_PRODUCT should be unitless, no attribute. -->
@@ -879,7 +1008,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:float">
-          <xs:attribute name="unit" type="xs:string" use="optional" default="litre" />
+          <xs:attribute name="unit" type="unitVolume" use="optional" default="L" />
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -918,42 +1047,42 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="CREATION_DATE" minOccurs="0"/>
-	<xs:element ref="EXPERIMENT_ID" minOccurs="0"/>
-	<xs:element ref="EXPERIMENT_TYPE" minOccurs="0"/>
-	<xs:element ref="MODIFICATION_DATE" minOccurs="0"/>
-	<xs:element ref="PROJECT_NAME" minOccurs="0"/>
-	<xs:element ref="QUALIFICATION" minOccurs="0"/>
-	<xs:element ref="SOURCE" minOccurs="0"/>
-	<xs:element ref="DESTINATION" minOccurs="0"/>
-	<xs:element ref="RANK" minOccurs="0"/>
-	<xs:element ref="CONCLUSION_PHRASE" minOccurs="0"/>
-	<xs:element ref="CREATED_AT_SITE" minOccurs="0"/>
-	<xs:element ref="DUPLICATE_EXP_REF" minOccurs="0"/>
-	<xs:element ref="PREPARATIVE" minOccurs="0"/>
-	<xs:element ref="ELN_CITATION" minOccurs="0"/>
-	<xs:element ref="REACTION_SCALE" minOccurs="0"/>
-	<xs:element ref="NEXTMOVE_REACTION_TYPE" minOccurs="0"/>
-	<xs:element ref="RXNO_REACTION_TYPE" minOccurs="0"/>
-	<xs:element ref="ANALYTICAL_DATA_EXISTS" minOccurs="0"/>
-	<xs:element ref="TECHNOLOGY" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SCIENTIST" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="RESP_SCIENTIST" minOccurs="0"/>
-	<xs:element ref="KEYWORDS" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="REACTANT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="PRODUCT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="REAGENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="CATALYST" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SOLVENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="CONDITIONS" minOccurs="0"/>
-	<xs:element ref="METABOLITES" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="IDENTIFIER" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="LINK" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="GROUPS" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="ANIMALS" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element name="CIT_ID" type="Id-Ref" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="CREATION_DATE" minOccurs="0"/>
+        <xs:element ref="EXPERIMENT_ID" minOccurs="0"/>
+        <xs:element ref="EXPERIMENT_TYPE" minOccurs="0"/>
+        <xs:element ref="MODIFICATION_DATE" minOccurs="0"/>
+        <xs:element ref="PROJECT_NAME" minOccurs="0"/>
+        <xs:element ref="QUALIFICATION" minOccurs="0"/>
+        <xs:element ref="SOURCE" minOccurs="0"/>
+        <xs:element ref="DESTINATION" minOccurs="0"/>
+        <xs:element ref="RANK" minOccurs="0"/>
+        <xs:element ref="CONCLUSION_PHRASE" minOccurs="0"/>
+        <xs:element ref="CREATED_AT_SITE" minOccurs="0"/>
+        <xs:element ref="DUPLICATE_EXP_REF" minOccurs="0"/>
+        <xs:element ref="PREPARATIVE" minOccurs="0"/>
+        <xs:element ref="ELN_CITATION" minOccurs="0"/>
+        <xs:element ref="REACTION_SCALE" minOccurs="0"/>
+        <xs:element ref="NEXTMOVE_REACTION_TYPE" minOccurs="0"/>
+        <xs:element ref="RXNO_REACTION_TYPE" minOccurs="0"/>
+        <xs:element ref="ANALYTICAL_DATA_EXISTS" minOccurs="0"/>
+        <xs:element ref="TECHNOLOGY" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SCIENTIST" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="RESP_SCIENTIST" minOccurs="0"/>
+        <xs:element ref="KEYWORDS" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="REACTANT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="PRODUCT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="REAGENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="CATALYST" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SOLVENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="CONDITIONS" minOccurs="0"/>
+        <xs:element ref="METABOLITES" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="IDENTIFIER" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="LINK" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="GROUPS" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ANIMALS" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="CIT_ID" type="Id-Ref" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="CIT_ID" type="Id-Ref"/>
       <xs:attribute name="outcome" type="xs:string"/>
@@ -989,15 +1118,15 @@
 
   <xs:element name="QUALIFICATION" type="xs:string"/>
 
-  <xs:element name="SCIENTIST" type="xs:string">
+  <xs:element name="SCIENTIST" type="authorDetails">
     <xs:annotation>
       <xs:documentation>
         The scientist who performed the reaction.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-    
-  <xs:element name="RESP_SCIENTIST" type="xs:string">
+
+  <xs:element name="RESP_SCIENTIST" type="authorDetails">
     <xs:annotation>
       <xs:documentation>
         The scientist responsible for the design and the performance of the
@@ -1024,8 +1153,8 @@
   <xs:element name="KEYWORDS">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
       <xs:attribute name="TYPE" type="xs:string"/>
     </xs:complexType>
@@ -1034,10 +1163,10 @@
   <xs:element name="GROUPS">
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="EXAMPLE" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="FUNCTIONAL" minOccurs="0"/>
-	<xs:element ref="PROTECTING" minOccurs="0"/>
-	<xs:element ref="TOLERATED" minOccurs="0"/>
+        <xs:element ref="EXAMPLE" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="FUNCTIONAL" minOccurs="0"/>
+        <xs:element ref="PROTECTING" minOccurs="0"/>
+        <xs:element ref="TOLERATED" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="TYPE" type="xs:string"/>
     </xs:complexType>
@@ -1046,8 +1175,8 @@
   <xs:element name="EXAMPLE">
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="CONDITION" minOccurs="0"/>
-	<xs:element ref="COMMENT" minOccurs="0"/>
+        <xs:element ref="CONDITION" minOccurs="0"/>
+        <xs:element ref="COMMENT" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="TYPE" type="xs:string"/>
       <xs:attribute name="CIT_ID" type="Id-Ref"/>
@@ -1057,8 +1186,8 @@
   <xs:element name="CONDITION">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -1066,8 +1195,8 @@
   <xs:element name="FUNCTIONAL">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -1075,8 +1204,8 @@
   <xs:element name="PROTECTING">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -1084,8 +1213,8 @@
   <xs:element name="TOLERATED">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0">
-	<xs:element ref="sup"/>
-	<xs:element ref="sub"/>
+        <xs:element ref="sup"/>
+        <xs:element ref="sub"/>
       </xs:choice>
       <xs:attribute name="CIT_ID" type="Id-Ref"/>
     </xs:complexType>
@@ -1094,9 +1223,9 @@
   <xs:element name="ANIMALS">
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="EXCRETION" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="ROUTE" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SPECIES" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="EXCRETION" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ROUTE" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SPECIES" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="CIT_ID" type="Id-Ref"/>
     </xs:complexType>
@@ -1125,7 +1254,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:float">
-          <xs:attribute name="unit" type="xs:string" use="optional" default="litre" />
+          <xs:attribute name="unit" type="unitVolume" use="optional" default="L" />
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -1146,14 +1275,14 @@
   <xs:element name="COMPOUND_NAME" type="xs:string"/>
 
   <!-- NOTE (v 4.0.0): Added default unit for EQUIVALENTS. -->
-  <xs:element name="EQUIVALENTS" type="percentageType" />
+  <xs:element name="EQUIVALENTS" type="equivalentType" />
 
   <!-- NOTE Added in v 5.0.0. -->
   <xs:element name="DENSITY">
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:decimal">
-          <xs:attribute name="unit" type="xs:string" use="optional" default="g/ml" />
+          <xs:attribute name="unit" type="unitMassPerVolume" use="optional" default="g/mL" />
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -1178,9 +1307,9 @@
   <xs:element name="METABOLITES">
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="AMOUNT" minOccurs="0"/>
-	<xs:element ref="EQUIVALENTS" minOccurs="0"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="AMOUNT" minOccurs="0"/>
+        <xs:element ref="EQUIVALENTS" minOccurs="0"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="ID" type="Id-Ref" use="required"/>
     </xs:complexType>
@@ -1194,27 +1323,32 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="NAME" minOccurs="0"/>
-	<xs:element ref="AMOUNT" minOccurs="0"/>
-	<xs:element ref="FORM" minOccurs="0"/>
-	<xs:element ref="COLOR" minOccurs="0"/>
-	<xs:element ref="VOLUME" minOccurs="0"/>
-	<xs:element ref="EQUIVALENTS" minOccurs="0"/>
+        <xs:element name="MOLECULE" type="moleculeRef" />
+        <xs:element ref="NAME" minOccurs="0"/>
+        <xs:element ref="AMOUNT" minOccurs="0"/>
+        <xs:element ref="FORM" minOccurs="0"/>
+        <xs:element ref="COLOR" minOccurs="0"/>
+        <xs:element ref="VOLUME" minOccurs="0"/>
+        <xs:element ref="EQUIVALENTS" minOccurs="0"/>
         <!-- NOTE Added in v 5.0.0. -->
-	<xs:element ref="DENSITY" minOccurs="0"/>
-	<xs:element ref="ENANTIOMERIC_PURITY" minOccurs="0"/>
-	<xs:element ref="LOADING" minOccurs="0"/>
-	<xs:element ref="MOLARIITY" minOccurs="0"/>
-	<xs:element ref="PERCENT_WEIGHT" minOccurs="0"/>
-	<xs:element ref="SAMPLE_MASS" minOccurs="0"/>
+        <xs:element ref="DENSITY" minOccurs="0"/>
+        <xs:element ref="ENANTIOMERIC_PURITY" minOccurs="0"/>
+        <xs:element ref="LOADING" minOccurs="0"/>
+        <xs:element ref="MOLARIITY" minOccurs="0"/>
+        <xs:element ref="PERCENT_WEIGHT" minOccurs="0"/>
+        <xs:element ref="SAMPLE_MASS" minOccurs="0"/>
         <!-- NOTE END of added in v 5.0.0. -->
         <xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ANALYTICAL_DATA" minOccurs="0" />
+        <!-- EHS is reserved for future use - Environment and Health Safety data. -->
+        <xs:element name="EHS" minOccurs="0" />
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLES" minOccurs="0" />
       </xs:sequence>
-      <xs:attribute name="ID" type="Id-Ref" use="required"/>
+      <!-- <xs:attribute name="ID" type="Id-Ref" use="required"/> -->
     </xs:complexType>
   </xs:element>
 
@@ -1226,27 +1360,32 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="NAME" minOccurs="0"/>
-	<xs:element ref="AMOUNT" minOccurs="0"/>
-	<xs:element ref="FORM" minOccurs="0"/>
-	<xs:element ref="COLOR" minOccurs="0"/>
-	<xs:element ref="YIELD" minOccurs="0"/>
-	<xs:element ref="CONVERSION" minOccurs="0"/>
-	<xs:element ref="PURITY" minOccurs="0"/>
-	<xs:element ref="ENANTIOMERIC_PURITY" minOccurs="0"/>
-	<xs:element ref="EQUIVALENTS" minOccurs="0"/>
+        <xs:element name="MOLECULE" type="moleculeRef" />
+        <xs:element ref="NAME" minOccurs="0"/>
+        <xs:element ref="AMOUNT" minOccurs="0"/>
+        <xs:element ref="FORM" minOccurs="0"/>
+        <xs:element ref="COLOR" minOccurs="0"/>
+        <xs:element ref="YIELD" minOccurs="0"/>
+        <xs:element ref="CONVERSION" minOccurs="0"/>
+        <xs:element ref="PURITY" minOccurs="0"/>
+        <xs:element ref="ENANTIOMERIC_PURITY" minOccurs="0"/>
+        <xs:element ref="EQUIVALENTS" minOccurs="0"/>
         <!-- NOTE Added in v 5.0.0. -->
-	<xs:element ref="EXPECTED_AMOUNT" minOccurs="0"/>
-	<xs:element ref="EXPECTED_MASS" minOccurs="0"/>
-	<xs:element ref="SAMPLE_MASS" minOccurs="0"/>
+        <xs:element ref="EXPECTED_AMOUNT" minOccurs="0"/>
+        <xs:element ref="EXPECTED_MASS" minOccurs="0"/>
+        <xs:element ref="SAMPLE_MASS" minOccurs="0"/>
         <!-- NOTE END of added in v 5.0.0. -->
-	<xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ANALYTICAL_DATA" minOccurs="0" />
+        <!-- EHS is reserved for future use - Environment and Health Safety data. -->
+        <xs:element name="EHS" minOccurs="0" />
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLES" minOccurs="0" />
       </xs:sequence>
-      <xs:attribute name="ID" type="Id-Ref" use="required"/>
+      <!-- <xs:attribute name="ID" type="Id-Ref" use="required"/> -->
     </xs:complexType>
   </xs:element>
 
@@ -1258,22 +1397,27 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="NAME" minOccurs="0"/>
-	<xs:element ref="AMOUNT" minOccurs="0"/>
-	<xs:element ref="FORM" minOccurs="0"/>
-	<xs:element ref="COLOR" minOccurs="0"/>
-	<xs:element ref="VOLUME" minOccurs="0"/>
+        <xs:element name="MOLECULE" type="moleculeRef" />
+        <xs:element ref="NAME" minOccurs="0"/>
+        <xs:element ref="AMOUNT" minOccurs="0"/>
+        <xs:element ref="FORM" minOccurs="0"/>
+        <xs:element ref="COLOR" minOccurs="0"/>
+        <xs:element ref="VOLUME" minOccurs="0"/>
         <!-- NOTE Added in v 5.0.0. -->
-	<xs:element ref="DENSITY" minOccurs="0"/>
-	<xs:element ref="EQUIVALENTS" minOccurs="0"/>
+        <xs:element ref="DENSITY" minOccurs="0"/>
+        <xs:element ref="EQUIVALENTS" minOccurs="0"/>
         <!-- NOTE END of added in v 5.0.0. -->
-	<xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ANALYTICAL_DATA" minOccurs="0" />
+        <!-- EHS is reserved for future use - Environment and Health Safety data. -->
+        <xs:element name="EHS" minOccurs="0" />
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLES" minOccurs="0" />
       </xs:sequence>
-      <xs:attribute name="ID" type="Id-Ref" use="required"/>
+      <!-- <xs:attribute name="ID" type="Id-Ref" use="required"/> -->
     </xs:complexType>
   </xs:element>
 
@@ -1285,19 +1429,24 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="NAME" minOccurs="0"/>
-	<xs:element ref="AMOUNT" minOccurs="0"/>
-	<xs:element ref="FORM" minOccurs="0"/>
-	<xs:element ref="COLOR" minOccurs="0"/>
-	<xs:element ref="VOLUME" minOccurs="0"/>
-	<xs:element ref="ENANTIOMERIC_PURITY" minOccurs="0"/>
-	<xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="MOLECULE" type="moleculeRef" />
+        <xs:element ref="NAME" minOccurs="0"/>
+        <xs:element ref="AMOUNT" minOccurs="0"/>
+        <xs:element ref="FORM" minOccurs="0"/>
+        <xs:element ref="COLOR" minOccurs="0"/>
+        <xs:element ref="VOLUME" minOccurs="0"/>
+        <xs:element ref="ENANTIOMERIC_PURITY" minOccurs="0"/>
+        <xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ANALYTICAL_DATA" minOccurs="0" />
+        <!-- EHS is reserved for future use - Environment and Health Safety data. -->
+        <xs:element name="EHS" minOccurs="0" />
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLES" minOccurs="0" />
       </xs:sequence>
-      <xs:attribute name="ID" type="Id-Ref" use="required"/>
+      <!-- <xs:attribute name="ID" type="Id-Ref" use="required"/> -->
     </xs:complexType>
   </xs:element>
 
@@ -1309,21 +1458,93 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="NAME" minOccurs="0"/>
-	<xs:element ref="AMOUNT" minOccurs="0"/>
-	<xs:element ref="FORM" minOccurs="0"/>
-	<xs:element ref="COLOR" minOccurs="0"/>
-	<xs:element ref="VOLUME" minOccurs="0"/>
-	<xs:element ref="EQUIVALENTS" minOccurs="0"/>
-	<xs:element ref="MOLARITY" minOccurs="0"/>
-	<xs:element ref="PURITY" minOccurs="0"/>
-	<xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="MOLECULE" type="moleculeRef" />
+        <xs:element ref="NAME" minOccurs="0"/>
+        <xs:element ref="AMOUNT" minOccurs="0"/>
+        <xs:element ref="FORM" minOccurs="0"/>
+        <xs:element ref="COLOR" minOccurs="0"/>
+        <xs:element ref="VOLUME" minOccurs="0"/>
+        <xs:element ref="EQUIVALENTS" minOccurs="0"/>
+        <xs:element ref="MOLARITY" minOccurs="0"/>
+        <xs:element ref="PURITY" minOccurs="0"/>
+        <xs:element ref="SAMPLE_ID" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="SAMPLE_REF" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMPOUND_NAME" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="COMMENT" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="ANALYTICAL_DATA" minOccurs="0" />
+        <!-- EHS is reserved for future use - Environment and Health Safety data. -->
+        <xs:element name="EHS" minOccurs="0" />
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SAMPLES" minOccurs="0" />
       </xs:sequence>
-      <xs:attribute name="ID" type="Id-Ref" use="required"/>
+      <!-- <xs:attribute name="ID" type="Id-Ref" use="required"/> -->
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="SAMPLES">
+    <xs:annotation>
+      <xs:documentation>
+        List of compound samples.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SAMPLE" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="SAMPLE">
+    <xs:annotation>
+      <xs:documentation>
+        Compound sample - a portion of material selected from a larger
+        quantity of material.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="SAMPLE_ID" /> <!-- Required -->
+        <xs:element ref="SAMPLE_REF" minOccurs="0" />
+        <xs:element ref="SAMPLE_MASS" minOccurs="0" />
+        <xs:element name="BATCH_ID" type="xs:string" minOccurs="0" />
+        <xs:element ref="AMOUNT" minOccurs="0"/>
+        <xs:element ref="PURITY" minOccurs="0"/>
+        <xs:element name="BARCODE" type="xs:string" minOccurs="0" />
+        <xs:element ref="ANALYTICAL_DATA" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ANALYTICAL_DATA">
+    <xs:annotation>
+      <xs:documentation>
+        Results of analytical experiments (spetroscopy, chromatography etc.)
+        for the associated compound or sample.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="EXPERIMENT" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="EXPERIMENT">
+    <xs:annotation>
+      <xs:documentation>
+        Single analytical experiment (spetroscopy, chromatography etc.)
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="EXPERIMENT_ID" type="xs:string" minOccurs="0"/>
+        <xs:element ref="CREATION_DATE" minOccurs="0" />
+        <xs:element name="SYSTEM" type="xs:string" minOccurs="0" />
+        <xs:element name="SUMMARY" type="xs:string" minOccurs="0" />
+        <xs:element name="DATA" type="sectionData" minOccurs="0" />
+        <xs:element name="DATA_URL" minOccurs="0" />
+      </xs:sequence>
+      <xs:attribute name="method" type="method" use="required" />
     </xs:complexType>
   </xs:element>
 
@@ -1335,8 +1556,8 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-	<xs:element ref="PREPARATION" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="CONDITION_GROUP" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="PREPARATION" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="CONDITION_GROUP" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1354,19 +1575,19 @@
         <xs:element ref="CATALYST_ID" minOccurs="0" maxOccurs="unbounded" />
         <xs:element ref="REAGENT_ID" minOccurs="0" maxOccurs="unbounded" />
         <xs:element ref="SOLVENT_ID" minOccurs="0" maxOccurs="unbounded" />
-	<xs:element ref="ATMOSPHERE" minOccurs="0"/>
-	<xs:element ref="PH" minOccurs="0"/>
-	<xs:element ref="PREPARATION" minOccurs="0" maxOccurs="unbounded"/>
-	<xs:element ref="PRESSURE" minOccurs="0"/>
-	<xs:element ref="REACTION_MOLARITY" minOccurs="0"/>
-	<xs:element ref="REFLUX" minOccurs="0"/>
-	<xs:element ref="TEMPERATURE" minOccurs="0"/>
-	<xs:element ref="TIME" minOccurs="0"/>
-	<xs:element ref="TOTAL_VOLUME" minOccurs="0"/>
+        <xs:element ref="ATMOSPHERE" minOccurs="0"/>
+        <xs:element ref="PH" minOccurs="0"/>
+        <xs:element ref="PREPARATION" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="PRESSURE" minOccurs="0"/>
+        <xs:element ref="REACTION_MOLARITY" minOccurs="0"/>
+        <xs:element ref="REFLUX" minOccurs="0"/>
+        <xs:element ref="TEMPERATURE" minOccurs="0"/>
+        <xs:element ref="TIME" minOccurs="0"/>
+        <xs:element ref="TOTAL_VOLUME" minOccurs="0"/>
         <xs:element ref="BUFFER_TYPE" minOccurs="0" />
         <xs:element ref="BUFFER_CONCENTRATION" minOccurs="0" />
         <xs:element ref="STIRRING" minOccurs="0" />
-	<xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="SECTION" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1381,7 +1602,7 @@
       <xs:sequence>
         <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
-      <xs:attribute name="format" use="optional" default="text" />
+      <xs:attribute name="ID" use="optional" default="text" />
     </xs:complexType>
   </xs:element>
 
@@ -1410,7 +1631,7 @@
 
   <xs:element name="BUFFER_TYPE" type="xs:string" />
 
-  <!-- TODO Check the default units: mol/l vs g/l vs %. -->
+  <!-- TODO Check the default units: mol/L vs g/l vs %. -->
   <xs:element name="BUFFER_CONCENTRATION" type="molarityRange" />
 
   <!-- NOTE Added in v 5.0.0. -->
@@ -1419,4 +1640,11 @@
   <xs:element name="REAGENT_ID" type="Id-Ref" />
   <xs:element name="SOLVENT_ID" type="Id-Ref" />
   <xs:element name="PROCESS" type="xs:string" />
+
+  <!-- TODO Check the regular expresssion below. -->
+  <xs:simpleType name="phoneNumber">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9 \-()]*"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
