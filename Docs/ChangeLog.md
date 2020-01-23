@@ -18,15 +18,6 @@
 1. New entity: `ANALYTICAL_DATA` and related sub-elements: `EXPERIMENT`,
    `CREATION_DATE`, `SYSTEM`, `SUMMARY`, `DATA`, `DATA_URL`.
 
-   ```xml
-<ANALYTICAL_DATA>
-  <EXPERIMENT method="nuclear magnetic resonance spectroscopy">
-    <CREATION_DATE>2019-01-23</CREATION_DATE>
-    <DATA_URL>https://our-lims/record-21312</DATA_URL>
-  </EXPERIMENT>
-</ANALYTICAL_DATA>
-   ```
-
 1. New entity: `ORGANISATION` containing `NAME` (required), `ADDRESS`,
    `COUNTRY`, `URL`, `EMAIL`, `PHONE`, `COMMENT`.
 
