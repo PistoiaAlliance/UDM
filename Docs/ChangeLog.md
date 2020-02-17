@@ -170,6 +170,64 @@ Note
     </MOLECULE>
     ```
 
+1. Extended support for `PH` values.  The following combinations of
+   sub-elements of `PH` are now supported:
+   * `min` only
+   * `max` only
+   * `min` and `max`
+   * `exact`
+
+    Example:
+
+    ```xml
+    <PH>
+      <max>10.0</max>
+    </PH>
+     
+    <PH>
+      <min>7.0</min>
+      <max>10.0</max>
+    </PH>
+     
+    <PH>
+      <exact>7.0</exact>
+    </PH>
+    ```
+
+1. Enhanced `PREPARATION` entity:
+   * Type changed to allow any content: text string, XML elements, mixed and
+     CDATA.
+   * Added optional `format` attribute, default value is `text`.
+   * Allowed multiple instances of the preparation section to allow multiple
+     representation of the same content.
+
+    Example:
+
+    ```xml
+    <PREPARATION format="html">
+      Sat. aqueous Na<sub>2</sub>S<sub>2</sub>O<sub>4</sub> (20 mL) was added to a solution of 10 (7.6 mg, 0.020 mmol) in ...
+    </PREPARATION>
+    <PREPARATION format="text">
+      Sat. aqueous Na2S2O4 (20 mL) was added to a solution of 10 (7.6 mg, 0.020 mmol) in ...
+    </PREPARATION>
+    <PREPARATION format="pdf">
+      <![CDATA[%PDF-1.7
+    %
+    1 0 obj
+    <</Type/Catalog/Pages 2 0 R/Lang(en-GB) /StructTreeRoot 10 0 R/MarkInfo<</Marked true>>/Metadata 20 0 R/ViewerPreferences 21 0 R>>
+    endobj
+    ...
+    ]]>
+    </PREPARATION>
+    <PREPARATION format="robot">
+      <STEP action="add">
+        <COMPOUND>Sodium dithionite</COMPOUND>
+        <VOLUME unit="mL">20</VOLUME>
+        ...
+      </STEP>
+    </PREPARATION>
+    ```
+
 ### Other
 
 1. UDM code hosted on GitHub: https://github.com/PistoiaAlliance/UDM
