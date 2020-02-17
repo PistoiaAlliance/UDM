@@ -60,6 +60,39 @@ Note
 
     ![Conditions](Images/ChangeLog/Conditions.png)
 
+    Example:
+
+    ```xml
+    <CONDITIONS>
+      <PREPARATION>A solution of 7 (0.5 g, 1.8 mmol)...</PREPARATION>
+      <CONDITION_GROUP>
+        <TEMPERATURE>
+          <min>20</min>
+          <max>20</max>
+        </TEMPERATURE>
+        <TIME>
+          <min>23</min>
+          <max>23</max>
+        </TIME>
+      </CONDITION_GROUP>
+      <CONDITION_GROUP>
+        <TEMPERATURE>
+          <min>165</min>
+          <max>165</max>
+        </TEMPERATURE>
+        <TIME>
+          <min>5</min>
+          <max>5</max>
+        </TIME>
+      </CONDITION_GROUP>
+      <CONDITION_GROUP>
+        <TIME>
+          <min>6</min>
+          <max>6</max>
+        </TIME>
+      </CONDITION_GROUP>
+    </CONDITIONS>
+```
 
 ### Other
 
