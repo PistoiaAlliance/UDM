@@ -35,6 +35,37 @@ Note
 </TEMPERATURE>
 ```
 
+1. `CATALYSTS` renamed to `CATALYST`; removed hardcoded limits: eight
+   `COMMENTS`, 20 `SAMPLE_ID`, 20 `SAMPLE_REF`, 20 `COMPOUND_NAME` per
+   catalyst; Added new property: `ENANTIOMERIC_PURITY`.
+
+1. Added new attributes for the `CLP` entity: `method`, `software`, `version`,
+   `unit`
+
+1. `COMMENTS` renamed to `COMMENT`.
+
+1. `CONDITIONS`
+
+    The reaction condition model has been significantly refactored to allow
+    grouping of related conditions.  In contrast to previous versions only
+    single instance of the `CONDITIONS` element per variation is allowed.
+    Furthermore, additional condition types have been introduced
+    (`BUFFER_TYPE`, `BUFFER_CONCENTRATION`, `STIRRING`, `PROCESS`) as well as
+    references to various types of agents (`REACTANT_ID`, `CATALYST_ID`,
+    `SOLVENT_ID`, `REAGENT_ID`). Another change is that in this version the
+    `PREPARATION` element can be used in two different locations: (1) at the
+    very beginning of the `CONDITIONS` block and (2) inside
+    `CONDITION_GROUP`. This allows representing more complex scenarios as the
+    one illustrated below:
+
+    ![Conditions](Images/ChangeLog/Conditions.png)
+
+
+### Other
+
+1. UDM code hosted on GitHub: https://github.com/PistoiaAlliance/UDM
+
+
 ## Changes 5.0.1 to 6.0.0
 
 ### XML Schema
