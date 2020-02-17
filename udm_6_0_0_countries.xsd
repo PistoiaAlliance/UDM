@@ -28,8 +28,9 @@
            version="6.0.0">
 
   <!--
-      The UDM country type is defined in as separate file to minimise changes
-      in the main UDM XML schema file between version 5.x and 6.x.
+      The countries, methods, reaction classes, result types and units UDM
+      vocabularies are defined in as separate files to minimise changes in the
+      main UDM XML schema file between version 5.x and 6.x.
 
       The country vocabulary is based on ISO 3166 with added some common names
       and English transliterations.

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Pistoia Alliance UDM XML Schema.
+
+    Copyright (c) Pistoia Alliance, 2018-2020.
+
+    Licensor hereby grants you the right, without charge, on a perpetual,
+    non-exclusive and worldwide basis, to utilize this UDM XML Schema
+    Definition (and the UDM File Format based on it) for the purpose of
+    developing, making, having made, using, marketing, importing, offering to
+    sell or license, and selling or licensing, and to otherwise distribute
+    products complying with the Definition, in all cases subject to the
+    conditions set forth in this Agreement and any relevant patent and other
+    intellectual property rights of third parties (which may include members
+    of Licensor). This license grant does not include the right to sublicense,
+    modify the format or create derivative works of the Definition that are
+    not compatible with the UDM File Format, except that licensee may provide
+    additional requirements for content included in the SECTION element
+    provided that such requirements still validate against the UDM XML schema.
+    For the avoidance of doubt, products implementing this Definition are not
+    deemed to be derivative works of the UDM XML Schema Definition.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="6.0.0">
+
+  <!--
+      The countries, methods, reaction classes, result types and units UDM
+      vocabularies are defined in as separate files to minimise changes in the
+      main UDM XML schema file between version 5.x and 6.x.
+
+      The individual methods are from Allotrope Foundation Taxonomies (AFT)
+      and on based preferred labels for physical characterization assay
+      entities:
+       * AFO-2019_09/afo/voc/afo/WD/2019/09/aft.ttl
+
+      We use the working draft version of the AFT instead of the recommended
+      one for 2019-09 to preserve the same version as for the methods
+      vocabulary.
+    -->
+
+  <xs:simpleType name="resultType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Auger spectrum" />
+      <xs:enumeration value="Fourier transform photoacoustic spectrum" />
+      <xs:enumeration value="Karl-Fischer titration curve" />
+      <xs:enumeration value="Mossbauer spectrum" />
+      <xs:enumeration value="Raman interferogram" />
+      <xs:enumeration value="Raman spectrum" />
+      <xs:enumeration value="Tauc plot" />
+      <xs:enumeration value="X-ray photoelectron spectrum" />
+      <xs:enumeration value="X-ray spectrum" />
+      <xs:enumeration value="absorbance titration curve" />
+      <xs:enumeration value="absorption spectrum" />
+      <xs:enumeration value="acoustic emission spectrum" />
+      <xs:enumeration value="action spectrum" />
+      <xs:enumeration value="adsorption-desorption isotherm" />
+      <xs:enumeration value="alpha-particle spectrum" />
+      <xs:enumeration value="atomic spectrum" />
+      <xs:enumeration value="beta-particle spectrum" />
+      <xs:enumeration value="calibration curve" />
+      <xs:enumeration value="calibration spectrum" />
+      <xs:enumeration value="chromatogram" />
+      <xs:enumeration value="chromatogram" />
+      <xs:enumeration value="circular dichroism spectrum" />
+      <xs:enumeration value="conversion spectrum" />
+      <xs:enumeration value="corrected emission spectrum" />
+      <xs:enumeration value="derivative spectrum" />
+      <xs:enumeration value="diagnostic trace" />
+      <xs:enumeration value="diagnostic trace" />
+      <xs:enumeration value="differential scanning calorimetry curve" />
+      <xs:enumeration value="diffuse reflectance spectrum" />
+      <xs:enumeration value="electroluminescence spectrum" />
+      <xs:enumeration value="electroluminescence spectrum" />
+      <xs:enumeration value="electromagnetic radiation spectrum" />
+      <xs:enumeration value="electron energy-loss spectrum" />
+      <xs:enumeration value="electronic absorption spectrum" />
+      <xs:enumeration value="electronic absorption spectrum" />
+      <xs:enumeration value="electronic circular dichroism spectrum" />
+      <xs:enumeration value="electronic spectrum" />
+      <xs:enumeration value="electropherogram" />
+      <xs:enumeration value="electropherogram" />
+      <xs:enumeration value="electrospray ionization gas-phase electrophoretic mobility molecular analysis spectrum" />
+      <xs:enumeration value="emission spectrum" />
+      <xs:enumeration value="energy-dispersive X-ray spectrum" />
+      <xs:enumeration value="excitation-emission spectrum" />
+      <xs:enumeration value="flow curve" />
+      <xs:enumeration value="fluorescence spectrum" />
+      <xs:enumeration value="fluorescence spectrum" />
+      <xs:enumeration value="fluorescence titration curve" />
+      <xs:enumeration value="fluorescence-detected circular dichrosim spectrum" />
+      <xs:enumeration value="gamma-ray spectrum" />
+      <xs:enumeration value="gas-phase electrophoretic mobility molecular analysis spectrum" />
+      <xs:enumeration value="incident photon conversion efficiency spectrum" />
+      <xs:enumeration value="inelastic tunneling spectrum" />
+      <xs:enumeration value="infrared spectrum" />
+      <xs:enumeration value="infrared spectrum" />
+      <xs:enumeration value="infrared spectrum" />
+      <xs:enumeration value="interferogram" />
+      <xs:enumeration value="isothermal titration calorimetry curve" />
+      <xs:enumeration value="low-temperature photoluminescence spectrum" />
+      <xs:enumeration value="low-temperature photoluminescence spectrum" />
+      <xs:enumeration value="luminescence spectrum" />
+      <xs:enumeration value="luminescence spectrum" />
+      <xs:enumeration value="magnetic circular dichroism spectrum" />
+      <xs:enumeration value="mass spectrum" />
+      <xs:enumeration value="melting curve" />
+      <xs:enumeration value="microwave spectrum" />
+      <xs:enumeration value="near-edge X-ray absorption fine structure spectrum" />
+      <xs:enumeration value="nitrogen adsorption-desorption isotherm" />
+      <xs:enumeration value="nuclear magnetic resonance spectrum" />
+      <xs:enumeration value="optical extinction spectrum" />
+      <xs:enumeration value="oximetry spectrum" />
+      <xs:enumeration value="phosphorescence spectrum" />
+      <xs:enumeration value="phosphorescence spectrum" />
+      <xs:enumeration value="photoacoustic spectrum" />
+      <xs:enumeration value="photocurrent action spectrum" />
+      <xs:enumeration value="photoelectron spectrum" />
+      <xs:enumeration value="photoluminescence spectrum" />
+      <xs:enumeration value="photoluminescence spectrum" />
+      <xs:enumeration value="profile" />
+      <xs:enumeration value="reflectance spectrum" />
+      <xs:enumeration value="room-temperature photoluminescence spectrum" />
+      <xs:enumeration value="room-temperature photoluminescence spectrum" />
+      <xs:enumeration value="rotational spectrum" />
+      <xs:enumeration value="spectrum" />
+      <xs:enumeration value="sum-frequency generation spectrum" />
+      <xs:enumeration value="thermal desorption spectrum" />
+      <xs:enumeration value="titration curve" />
+      <xs:enumeration value="total ion current profile" />
+      <xs:enumeration value="total ion current profile" />
+      <xs:enumeration value="transmission spectrum" />
+      <xs:enumeration value="two-photon emission spectrum" />
+      <xs:enumeration value="two-photon emission spectrum" />
+      <xs:enumeration value="vibrational spectrum" />
+      <xs:enumeration value="voltammogram" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

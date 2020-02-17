@@ -28,13 +28,17 @@
            version="6.0.0">
 
   <!--
-      The UDM unit vocabularies are defined in as separate file to minimise
-      changes in the main UDM XML schema file between version 5.x and 6.x.
+      The countries, methods, reaction classes, result types and units UDM
+      vocabularies are defined in as separate files to minimise changes in the
+      main UDM XML schema file between version 5.x and 6.x.
 
       The individual methods are from Allotrope Foundation Taxonomies (AFT)
       and on based preferred labels for physical characterization assay
       entities:
        * AFO-2019_09/afo/voc/afo/WD/2019/09/aft.ttl
+
+      We use the working draft version of the AFT instead of the recommended
+      one for 2019-09 as the latter one is practically empty.
     -->
 
   <xs:simpleType name="method">

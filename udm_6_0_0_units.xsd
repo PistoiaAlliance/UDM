@@ -28,8 +28,9 @@
            version="6.0.0">
 
   <!--
-      The UDM unit vocabularies are defined in as separate file to minimise
-      changes in the main UDM XML schema file between version 5.x and 6.x.
+      The countries, methods, reaction classes, result types and units UDM
+      vocabularies are defined in as separate files to minimise changes in the
+      main UDM XML schema file between version 5.x and 6.x.
 
       The individual units are aligned with Allotrope Foundation Ontologies
       (AFO) and based on unit abbreviations from::
