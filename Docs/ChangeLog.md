@@ -124,6 +124,51 @@ Note
 1. Removed the limit of maximum eight `COMMENTS` per metabolite in the
    `METABOLITES` element.
 
+1. New `PROPERTY` element to store molecular properties within a
+   `MOLECULE`. Attributes: `name`, `method`, `software`, `version` and `unit`.
+
+1. Extensions to `MOLSTRUCTURE`
+   * New `format` attribute with the following allowed values: `cdxml`,
+     `inchi`, `molfile`, `smiles` and `wiswesser`. If not specified the
+     default `molfile` value is assumed.
+   * Multiple instances of the `MOLSTRUCTURE` are now allowed so that
+     different representations of a molecular structure can be used at the
+     same time.
+
+    Example:
+     
+    ```xml
+    <MOLECULE ID="1">
+      <MOLSTRUCTURE format="molfile"><![CDATA[
+      ACCLDraw10181722532D
+     
+     10 10  0  0  0  0  0  0  0  0999 V2000
+        3.5382   -1.1166    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+        1.4918   -1.1166    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+        2.5150   -1.7074    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+        2.5150   -2.8888    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+        4.5574   -2.8878    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+        3.5342   -3.4785    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+        3.5342   -4.6600    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+        2.5175   -5.2495    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+        1.4919   -4.6653    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+        1.4919   -3.4791    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+      3  1  1  0  0  0  0
+      3  2  2  0  0  0  0
+      4  3  1  0  0  0  0
+      4 10  1  0  0  0  0
+      6  4  2  0  0  0  0
+      6  5  1  0  0  0  0
+      7  6  1  0  0  0  0
+      8  7  2  0  0  0  0
+      9  8  1  0  0  0  0
+     10  9  2  0  0  0  0
+    M  END
+    ]]></MOLSTRUCTURE>
+      <MOLSTRUCTURE format="smiles">OC(=O)c1ccccc1O</MOLSTRUCTURE>
+      <!-- Other elements... -->
+    </MOLECULE>
+    ```
 
 ### Other
 
