@@ -96,6 +96,34 @@ Note
 
 1. `IDENTIFIERS` renamed to `IDENTIFIER`.
 
+1. New element `LEGAL`
+
+    New, optional element to represent license and copyright information, to
+    be used before `CITATIONS`.
+    
+    Example:
+
+    ```xml
+    <LEGAL>
+      <PRODUCER>Jarek Tomczak</PRODUCER>
+      <TITLE>Sample UDM 5.0.0 dataset</TITLE>
+      <LICENSE href="https://creativecommons.org/licenses/by-nd/4.0">
+        Creative Commons Attribution-NoDerivatives 4.0 International
+        (CC BY-ND 4.0)
+      </LICENSE>
+      <COPYRIGHT href="http://pistoiaalliance.org/projects/udm">
+        <TEXT>Copyright © 2018 Pistoia Alliance</TEXT>
+        <OWNER>Pistoia Alliance</OWNER>
+        <DATE>2018</DATE>
+      </COPYRIGHT>
+    </LEGAL>
+    ```
+
+1. `LINKS` renamed to `LINK`.
+
+1. Removed the limit of maximum eight `COMMENTS` per metabolite in the
+   `METABOLITES` element.
+
 
 ### Other
 
