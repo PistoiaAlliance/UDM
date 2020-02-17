@@ -164,7 +164,6 @@
   <xs:simpleType name="unitTemperature">
     <xs:restriction base="xs:string">
       <xs:enumeration value="degC" /> <!-- Degree Celsius -->
-      <xs:enumeration value="degC" /> <!-- Degree Centigrade -->
       <xs:enumeration value="degF" /> <!-- Degree Fahrenheit -->
       <xs:enumeration value="degR" /> <!-- Degree Rankine -->
       <xs:enumeration value="K" />    <!-- Kelvin -->

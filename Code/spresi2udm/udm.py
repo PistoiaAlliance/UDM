@@ -31,23 +31,44 @@ def format_version_entity(major, minor, revision):
 
 def format_citation(citation_id, citation):
     """Return formatted CITATION entity."""
+    # Handle multiple authors.
+    authors = []
+    if ";" in citation.author:
+        authors = [a.strip() for a in citation.author.split(";")]
+    else:
+        n = len(citation.author.split(" "))
+        if (n >= 4) and ("," in citation.author):
+            authors = [a.strip() for a in citation.author.split(",")]
+        else:
+            authors = [ citation.author.strip() ]
+    author_string = "\n".join("        <AUTHOR><NAME>{}</NAME></AUTHOR>".format(a) for a in authors)
+    # Handle page numbers.
+    pp = [p.strip() for p in citation.page.split("-")]
+    pages_string = ""
+    if (len(pp) > 0) and (len(pp[0]) > 0):
+        pages_string = "<start>" + pp[0] + "</start>"
+        if len(pp) > 1:
+            pages_string += "<end>" + pp[1] + "</end>"
+        pages_string = "\n    <PAGE>" + pages_string + "</PAGE>"
+    # Handle publication year, including empty ones.
+    year_string = ""
+    if citation.year != "":
+        year_string = "<YEAR>{}</YEAR>\n".format(citation.year)
     return '''    <CITATION ID="{}">
       <TYPE>{}</TYPE>
-      <AUTHOR>{}</AUTHOR>
+      <AUTHORS>\n{}\n      </AUTHORS>
       <TITLE>{}</TITLE>
       <JOURNAL>{}</JOURNAL>
-      <YEAR>{}</YEAR>
-      <VOL>{}</VOL>
-      <PAGE>{}</PAGE>
+      {}<VOL>{}</VOL>{}
     </CITATION>
 '''.format(citation_id,
            citation.type,
-           citation.author,
+           author_string,
            citation.title,
            citation.journal,
-           citation.year,
+           year_string,
            citation.volume,
-           citation.page)
+           pages_string)
 
 
 EMPTY_MOLFILE = '''
@@ -86,15 +107,15 @@ def format_reaction(reaction, keep_mapping):
     s += '      <VARIATION CIT_ID="' + str(reaction.citation_id) + '">\n'
     s += '        <SOURCE>SPRESI</SOURCE>\n'
     for reactant_id in reaction.reactant_ids:
-        s += '        <REACTANT ID="' + str(reactant_id) + '" />\n'
+        s += '        <REACTANT><MOLECULE MOL_ID="' + str(reactant_id) + '" /></REACTANT>\n'
     for product_id in reaction.product_ids:
-        s += '        <PRODUCT ID="' + str(product_id) + '">\n'
-        s += '          <YIELD>' + str(reaction.reaction_yield) + '</YIELD>\n'
+        s += '        <PRODUCT><MOLECULE MOL_ID="' + str(product_id) + '" />\n'
+        s += '          <YIELD><exact>' + str(reaction.reaction_yield) + '</exact></YIELD>\n'
         s += '        </PRODUCT>\n'
     for catalyst_id in reaction.catalyst_ids:
-        s += '        <CATALYST ID="' + str(catalyst_id) + '" />\n'
+        s += '        <CATALYST><MOLECULE MOL_ID="' + str(catalyst_id) + '" /></CATALYST>\n'
     for solvent_id in reaction.solvent_ids:
-        s += '        <SOLVENT ID="' + str(solvent_id) + '" />\n'
+        s += '        <SOLVENT><MOLECULE MOL_ID="' + str(solvent_id) + '" /></SOLVENT>\n'
     s += '      </VARIATION>\n'
     s += '    </REACTION>\n'
     return s

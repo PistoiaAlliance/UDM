@@ -52,6 +52,7 @@
         <xs:element ref="CITATIONS" minOccurs="0"/>
         <xs:element ref="MOLECULES"/>
         <xs:element ref="REACTIONS"/>
+        <xs:element name="EHS" minOccurs="0" />
       </xs:sequence>
       <xs:attribute name="DATABASE" type="xs:string" use="required"/>
       <xs:attribute name="SEQUENCE" type="xs:nonNegativeInteger" use="required"/>
@@ -1533,6 +1534,8 @@
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:float">
+                <!-- Currently neither QUDT nor Allotrope support any unit for
+                     temperature increase over time. -->
                 <xs:attribute name="unit" type="xs:string" use="optional" />
               </xs:extension>
             </xs:simpleContent>

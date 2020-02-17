@@ -190,9 +190,9 @@ def write_udm_legal(fout):
         (CC BY-NC-SA 4.0)
       </LICENSE>
       <COPYRIGHT href="http://www.infochem.de">
-        <TEXT>Copyright (c) 2018 InfoChem</TEXT>
+        <TEXT>Copyright (c) 2020 InfoChem</TEXT>
         <OWNER>InfoChem</OWNER>
-        <DATE>2018</DATE>
+        <YEAR>2020</YEAR>
       </COPYRIGHT>
     </LEGAL>
 ''')
@@ -233,9 +233,9 @@ def write_udm_file(filename, reaction_entities):
     """Write filename UDM file for the given set of reactions."""
     with open(filename, 'wt') as fout:
         fout.write(udm.get_xml_declaration())
-        timestamp = format_timestamp(datetime.datetime(2018, 5, 14, 13, 34, 0), '+01:00')
+        timestamp = format_timestamp(datetime.datetime(2020, 1, 29, 13, 34, 0), '+01:00')
         fout.write(udm.format_udm_open('SPRESI', 1, timestamp))
-        fout.write(udm.format_version_entity(5, 0, 0))
+        fout.write(udm.format_version_entity(6, 0, 0))
         write_udm_legal(fout)
         write_udm_citations(fout)
         write_udm_molecules(fout)

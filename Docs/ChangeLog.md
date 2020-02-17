@@ -39,8 +39,6 @@
 
 1. New entity: `SAMPLES` to group `SAMPLE`s.
 
-1. New placeholder entity `EHS` for future use.
-
 1. The `DATE` field of `COPYRIGHT` renamed to `YEAR`,
    e.g. `/UDM/LEGAL/COPYRIGHT/DATE` becomes `/UDM/LEGAL/COPYRIGHT/YEAR`.
 
@@ -59,6 +57,11 @@
    providing `CITATION` subelements.  It replaces the `CIT_ID` element in
    previous versions.
 
+1. New placeholder entity `EHS` for future use (Environment and Health Safety
+   data).
+
+1. New placeholder entity `ROUTES` for future use (multistep reactions).
+
 
 ### Data sets
 
@@ -67,6 +70,12 @@
 1. Updated to version 6.0.0
 
 1. Fixed `RXNO_REACTION_TYPE` values to be compatible with the RXNO ontology.
+
+#### SPRESI
+
+1. Conversion code updated to generate version 6.0.0
+
+1. Data set updated to version 6.0.0
 
 
 ## Changes in Version 5.0.1
@@ -476,3 +485,16 @@ Note
 
 
 ## Changes introduced in 4.0.0
+
+First public release, fully compatible with the original version 3.6.0.112
+donated by Elsevier.
+
+1. Added explicit unit of measure to a number of entities.
+
+1. Added documentation for key entities.
+
+1. Included sample data sets (SPRESI, Reaxys)
+
+1. Included conversion tool from SPRESI RD file to UDM
+
+1. Numbered as 4.0.0 to avoid future conflicts with existing Elsevier versions
