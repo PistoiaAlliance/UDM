@@ -399,10 +399,80 @@ Note
     </xs:schema>
     ```
 
+1. `SOLVENTS` renamed to `SOLVENT`.
+    * Removed hardcoded limits: eight `COMMENTS`, 20 `SAMPLE_ID`, 20 `SAMPLE_REF`, 20 `COMPOUND_NAME` per solvent.
+    * Added new properties: `DENSITY`, `EQUIVALENTS`.
+
+1. Removed element `STAGES` - use `CONDITIONS` and `CONDITION_GROUPS` instead.
+
+1. `SYNONYMS` renamed to `SYNONYM`.
+
+1. Updated `TEMPERATURE`:
+   * The `unit` attribute is now specified for the `TEMPERATURE` element
+     rather than `min` and `max` as in 4.0.0.
+   * The following combinations of sub-elements of `TEMPERATURE` are now
+     supported:
+     - `min` only
+     - `max` only
+     - `min` and `max`
+     - `min`, `max` and `incr`
+     - `exact`
+
+    Examples:
+
+    ```xml
+    <TEMPERATURE>
+      <min>90</min>
+    </TEMPERATURE>
+     
+    <TEMPERATURE unit="degree_C">
+      <min>90</min>
+      <max>100</max>
+      <incr unit="degree_C/hour">5</incr>
+    </TEMPERATURE>
+     
+    <TEMPERATURE unit="degree_C">
+      <exact>93.2</exact>
+    </TEMPERATURE>
+    TIME
+    ```
+
+1. Updated `TIME`:
+   * The `unit` attribute is now specified for the `TIME` element rather than `min` and `max` as in 4.0.0.
+   * The following combinations of sub-elements of `TIME` are now supported:
+     - `min` only
+     - `max` only
+     - `min` and `max`
+     - `exact`
+
+1. Updated `TOTAL_VOLUME`:
+   * The `unit` attribute is now specified for the `TOTAL_VOLUME` element rather than `min` and `max` as in 4.0.0.
+   * The following combinations of sub-elements of `TOTAL_VOLUME` are now supported:
+     - `min` only
+     - `max` only
+     - `min` and `max`
+     - `exact`
+
+1. Removed `UDM_VERSION_PA` element
+   
+    This element was introduced in version 4.0 to represent the actual version
+    of the Pistoia Alliance UDM and do not break compatibility with the
+    original Elsevier version (with hardcoded `UDM_VERSION`).
+
+1. Updated `UDM_VERSION`
+
+    Removed the `BUILD` component and thus simplifying versioning to
+    `MAJOR`.`MINOR`.`REVISION`.  Changed allowed version values to 5.x.x where
+    x are integers starting from 0.
+
+1. `VARIATIONS` renamed to `VARIATION`; added new `outcome` attribute that can
+   be used to store arbitrary assessment whether the reaction was successful
+   or failed.
+
+
 ### Other
 
 1. UDM code hosted on GitHub: https://github.com/PistoiaAlliance/UDM
-
 
 
 ## Changes introduced in 4.0.0
