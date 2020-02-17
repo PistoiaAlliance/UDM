@@ -1,8 +1,75 @@
 # UDM XML Schema Change Log
 
-## Changes introduced in 4.0.0
+## Changes in Version 6.0.0
 
-## Changes 4.0.0 to 5.0.1
+### XML Schema
+
+1. Introduced controlled vocabularies (in separate *.xsd files) for
+   * Countries (based on ISO 3166)
+   * Units (based on 2019.09 Allotrope version of QUDT)
+     * Amount of substance
+     * Mass
+     * Mass per volume
+     * Molar concentration
+     * Pressure or stress
+     * Temperature
+     * Time
+     * Volume
+   * Analytical methods (based on 2019.09 Allotrope Foundation Taxonomies)
+   * Result types (based on 2019.09 Allotrope Foundation Taxonomies)
+   * Reaction classes (based on the RXNO reaction ontology)
+
+1. New entity: `ANALYTICAL_DATA` and related sub-elements: `EXPERIMENT`,
+   `CREATION_DATE`, `SYSTEM`, `SUMMARY`, `DATA`, `DATA_URL`.
+
+1. New entity: `ORGANISATION` containing `NAME` (required), `ADDRESS`,
+   `COUNTRY`, `URL`, `EMAIL`, `PHONE`, `COMMENT`.
+
+1. New entity: `ORGANISATIONS` to group `ORGANISATION`s.
+
+1. Enhanced `AUTHOR` entity to include `NAME` (required), `EMAIL`, `PHONE`,
+   `ORGANISATION`.
+
+1. New entity: `AUTHORS` to group `AUTHOR`s.
+
+1. `RESP_SCIENTIST` and `SCIENTIST` contain the same elements as `AUTHOR`.
+
+1. New entity: `SAMPLE` containing `SAMPLE_ID` (required), `SAMPLE_REF`,
+   `SAMPLE_MASS`, `BATCH_ID`, `AMOUNT`, `PURITY`, `BARCODE`, `ANALYTICAL_DATA`.
+
+1. New entity: `SAMPLES` to group `SAMPLE`s.
+
+1. New placeholder entity `EHS` for future use.
+
+1. The `DATE` field of `COPYRIGHT` renamed to `YEAR`,
+   e.g. `/UDM/LEGAL/COPYRIGHT/DATE` becomes `/UDM/LEGAL/COPYRIGHT/YEAR`.
+
+1. Type of `/UDM/CITATIONS/CITATION/PATENT_PUB_DATE` changed to `xs:date`.
+
+1. Type of `/UDM/CITATIONS/CITATION/YEAR` changed to `xs:positiveInteger`.
+
+1. `MOLECULE` can be specified inside `REACTANT`, `PRODUCT`, `SOLVENT`,
+   `CATALYST` and `REAGENT` in addition or instead of the `MOLECULES` block.
+
+1. Removed the `ID` attribute from `REACTANT`, `PRODUCT`, `SOLVENT`,
+   `CATALYST` and `REAGENT`, use `<MOLECULE MOD_ID="..." />` instead.
+
+1. `CITATION` can be directly specified inside the `MOLECULE` and `VARIATION`
+   entities either by referencing a citation from the `CITATIONS` element or
+   providing `CITATION` subelements.  It replaces the `CIT_ID` element in
+   previous versions.
+
+
+### Data sets
+
+#### Reaxys
+
+1. Updated to version 6.0.0
+
+1. Fixed `RXNO_REACTION_TYPE` values to be compatible with the RXNO ontology.
+
+
+## Changes in Version 5.0.1
 
 ### XML Schema
 
@@ -112,7 +179,7 @@ Note
         (CC BY-ND 4.0)
       </LICENSE>
       <COPYRIGHT href="http://pistoiaalliance.org/projects/udm">
-        <TEXT>Copyright © 2018 Pistoia Alliance</TEXT>
+        <TEXT>Copyright (c) 2018 Pistoia Alliance</TEXT>
         <OWNER>Pistoia Alliance</OWNER>
         <DATE>2018</DATE>
       </COPYRIGHT>
@@ -123,9 +190,6 @@ Note
 
 1. Removed the limit of maximum eight `COMMENTS` per metabolite in the
    `METABOLITES` element.
-
-1. New `PROPERTY` element to store molecular properties within a
-   `MOLECULE`. Attributes: `name`, `method`, `software`, `version` and `unit`.
 
 1. Extensions to `MOLSTRUCTURE`
    * New `format` attribute with the following allowed values: `cdxml`,
@@ -228,78 +292,117 @@ Note
     </PREPARATION>
     ```
 
+1. Changed `PRESSURE` entity:
+   * The `unit` attribute is now specified for the `PRESSURE` element rather than `min` and `max` as in 4.0.0.
+   * The following combinations of sub-elements of PRESSURE are now supported:
+     - `min` only
+     - `max` only
+     - `min` and `max`
+     - `exact`
+
+1. `PRODUCTS` renamed to `PRODUCT`; removed hardcoded limits: eight
+    `COMMENTS`, 20 `SAMPLE_ID`, 20 `SAMPLE_REF`, 20 `COMPOUND_NAME` per
+    product; added new properties: `EXPECTED_AMOUNT`, `EXPECTED_MASS`,
+    `SAMPLE_MASS`.
+
+1. New `PROPERTY` element to store molecular properties within a
+   `MOLECULE`. Attributes: `name`, `method`, `software`, `version` and `unit`.
+
+1. New `PSA` attributes in addition to `unit` introduced in 4.0.0: `method`,
+   `software`, `version`.
+
+1. `REACTANTS` renamed to `REACTANT`; removed hardcoded limits: eight
+    `COMMENTS`, 20 `SAMPLE_ID`, 20 `SAMPLE_REF`, 20 `COMPOUND_NAME` per
+    reactant.  Added new properties: `DENSITY`, `ENANTIOMERIC_PURITY`,
+    `LOADING`, `MOLARITY`, `PERCENT_WEIGHT`, `SAMPLE_MASS`.
+
+1. `REAGENTS` renamed to `REAGENT`; removed hardcoded limits: eight
+   `COMMENTS`, 20 `SAMPLE_ID`, 20 `SAMPLE_REF`, 20 `COMPOUND_NAME` per
+   reagent; added new properties: `MOLARITY` and `PURITY`.
+
+1. Updated `REACTION_MOLARITY`:
+   * The `unit` attribute is now specified for the `REACTION_MOLARITY` element
+     rather than `min` and `max` as in 4.0.0.
+   * The following combinations of sub-elements of `REACTION_MOLARITY` are now
+     supported:
+     - `min` only
+     - `max` only
+     - `min` and `max`
+     - `exact`
+
+1. Enhanced `RXNSTRUCTURE` - new `format` attribute with the following allowed
+   values: `cdxml`, `rinchi`, `rsmiles` and `rxn`.  If not specified the
+   default `rxn` value is assumed.
+
+1. New `SECTION` element
+
+    New element allowing storing publisher-specific data in predefined places
+    of the UDM hierarchy: `CITATION`, `MOLECULE`, `REACTION`, `VARIATIONS`,
+    `REACTANT`, `PRODUCT`, `SOLVENT`, `CATALYST`, `REAGENTS`, `CONDITIONS`.
+    The contents of the `SECTION` element can contain any data and it will be
+    ignored when validated against the UDM schema, but a derived schema can be
+    created which will extend the UDM schema and provide additional
+    restriction on the content of the `SECTION` elements.
+
+    Example: the reaction `PRODUCT` element may contain analytical data:
+    ```xml
+    <PRODUCT>
+      ...
+      <SECTION type="analytical_data">
+        <!-- Custom, publisher-specific data. -->
+        <Spectrum type="IR" id="423">
+          <![CDATA[ ... ]]>
+        </Spectrum>
+      </SECTION>
+    </PRODUCT>
+    ```
+
+    The `SECTION` element will be processed without validation when using the
+    standard UDM schema, but the example XML schema below provides additional
+    validation by enforcing the `SECTION` element to contain Spectrum
+    sub-elements which may have type and id attributes:
+    
+    ```xml
+    <?xml version="1.0" encoding="utf-8" ?>
+    <!-- Sample udm_spectra.xsd schema. -->
+    <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:redefine schemaLocation="udm_pa_5_0_0_draft.xsd">
+        <xs:complexType name="sectionData">
+          <xs:complexContent>
+            <xs:restriction base="sectionData">
+              <xs:sequence>
+                <xs:element name="Spectrum">
+                  <xs:complexType>
+                    <xs:simpleContent>
+                      <xs:extension base="xs:string">
+                        <xs:attribute name="type">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="IR" />
+                              <xs:enumeration value="NMR" />
+                              <xs:enumeration value="MS" />
+                              <xs:enumeration value="UV" />
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="id" type="xs:nonNegativeInteger" />
+                      </xs:extension>
+                    </xs:simpleContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="type" type="xs:string" />
+            </xs:restriction>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:redefine>
+    </xs:schema>
+    ```
+
 ### Other
 
 1. UDM code hosted on GitHub: https://github.com/PistoiaAlliance/UDM
 
 
-## Changes 5.0.1 to 6.0.0
 
-### XML Schema
-
-1. Introduced controlled vocabularies (in separate *.xsd files) for
-   * Countries (based on ISO 3166)
-   * Units (based on 2019.09 Allotrope version of QUDT)
-     * Amount of substance
-     * Mass
-     * Mass per volume
-     * Molar concentration
-     * Pressure or stress
-     * Temperature
-     * Time
-     * Volume
-   * Analytical methods (based on 2019.09 Allotrope Foundation Taxonomies)
-   * Result types (based on 2019.09 Allotrope Foundation Taxonomies)
-   * Reaction classes (based on the RXNO reaction ontology)
-
-1. New entity: `ANALYTICAL_DATA` and related sub-elements: `EXPERIMENT`,
-   `CREATION_DATE`, `SYSTEM`, `SUMMARY`, `DATA`, `DATA_URL`.
-
-1. New entity: `ORGANISATION` containing `NAME` (required), `ADDRESS`,
-   `COUNTRY`, `URL`, `EMAIL`, `PHONE`, `COMMENT`.
-
-1. New entity: `ORGANISATIONS` to group `ORGANISATION`s.
-
-1. Enhanced `AUTHOR` entity to include `NAME` (required), `EMAIL`, `PHONE`,
-   `ORGANISATION`.
-
-1. New entity: `AUTHORS` to group `AUTHOR`s.
-
-1. `RESP_SCIENTIST` and `SCIENTIST` contain the same elements as `AUTHOR`.
-
-1. New entity: `SAMPLE` containing `SAMPLE_ID` (required), `SAMPLE_REF`,
-   `SAMPLE_MASS`, `BATCH_ID`, `AMOUNT`, `PURITY`, `BARCODE`, `ANALYTICAL_DATA`.
-
-1. New entity: `SAMPLES` to group `SAMPLE`s.
-
-1. New placeholder entity `EHS` for future use.
-
-1. The `DATE` field of `COPYRIGHT` renamed to `YEAR`,
-   e.g. `/UDM/LEGAL/COPYRIGHT/DATE` becomes `/UDM/LEGAL/COPYRIGHT/YEAR`.
-
-1. Type of `/UDM/CITATIONS/CITATION/PATENT_PUB_DATE` changed to `xs:date`.
-
-1. Type of `/UDM/CITATIONS/CITATION/YEAR` changed to `xs:positiveInteger`.
-
-1. `MOLECULE` can be specified inside `REACTANT`, `PRODUCT`, `SOLVENT`,
-   `CATALYST` and `REAGENT` in addition or instead of the `MOLECULES` block.
-
-1. Removed the `ID` attribute from `REACTANT`, `PRODUCT`, `SOLVENT`,
-   `CATALYST` and `REAGENT`, use `<MOLECULE MOD_ID="..." />` instead.
-
-1. `CITATION` can be directly specified inside the `MOLECULE` and `VARIATION`
-   entities either by referencing a citation from the `CITATIONS` element or
-   providing `CITATION` subelements.  It replaces the `CIT_ID` element in
-   previous versions.
-
-
-### Data sets
-
-#### Reaxys
-
-1. Updated to version 6.0.0
-
-1. Fixed `RXNO_REACTION_TYPE` values to be compatible with the RXNO ontology.
-
-
-## TODO Add changes introduced in 5.0.x versions
+## Changes introduced in 4.0.0
