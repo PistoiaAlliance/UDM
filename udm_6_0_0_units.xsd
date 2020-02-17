@@ -73,13 +73,13 @@
       <xs:enumeration value="tbsp" />    <!-- Tablespoon -->
       <xs:enumeration value="tsp" />     <!-- Teaspoon -->
       <!-- Extensions -->
-      <xs:enumeration value="drp" />        <!-- Drop -->
-      <xs:enumeration value="fL" />         <!-- Femtoliter -->
-      <xs:enumeration value="&#x000B5;L" /> <!-- Microliter -->
-      <xs:enumeration value="uL" />         <!-- Microliter, English transliteration -->
-      <xs:enumeration value="mL" />         <!-- Milliliter -->
-      <xs:enumeration value="nL" />         <!-- Nanoliter -->
-      <xs:enumeration value="pL" />         <!-- Picoliter -->
+      <xs:enumeration value="drp" /> <!-- Drop -->
+      <xs:enumeration value="fL" />  <!-- Femtoliter -->
+      <xs:enumeration value="μL" />  <!-- Microliter -->
+      <xs:enumeration value="uL" />  <!-- Microliter, English transliteration -->
+      <xs:enumeration value="mL" />  <!-- Milliliter -->
+      <xs:enumeration value="nL" />  <!-- Nanoliter -->
+      <xs:enumeration value="pL" />  <!-- Picoliter -->
     </xs:restriction>
   </xs:simpleType>
 
@@ -104,28 +104,28 @@
       <xs:enumeration value="ton" />   <!-- Ton - Long/Short -->
       <xs:enumeration value="u" />     <!-- Unified Atomic Mass Unit -->
       <!-- Extensions -->
-      <xs:enumeration value="lbav" />       <!-- avoirdupois pound -->
-      <xs:enumeration value="fg" />         <!-- Femtogram -->
-      <xs:enumeration value="&#x000B5;g" /> <!-- Microgram -->
-      <xs:enumeration value="ug" />         <!-- Microgram -->
-      <xs:enumeration value="mg" />         <!-- Milligram -->
-      <xs:enumeration value="ng" />         <!-- Nanogram -->
-      <xs:enumeration value="pg" />         <!-- Picogram -->
+      <xs:enumeration value="lbav" /> <!-- avoirdupois pound -->
+      <xs:enumeration value="fg" />   <!-- Femtogram -->
+      <xs:enumeration value="μg" />   <!-- Microgram -->
+      <xs:enumeration value="ug" />   <!-- Microgram -->
+      <xs:enumeration value="mg" />   <!-- Milligram -->
+      <xs:enumeration value="ng" />   <!-- Nanogram -->
+      <xs:enumeration value="pg" />   <!-- Picogram -->
     </xs:restriction>
   </xs:simpleType>
 
 
   <xs:simpleType name="unitAmountOfSubstance">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="IU" />           <!-- International Unit -->
-      <xs:enumeration value="mol" />          <!-- Mole -->
+      <xs:enumeration value="IU" />   <!-- International Unit -->
+      <xs:enumeration value="mol" />  <!-- Mole -->
       <!-- Extensions -->
-      <xs:enumeration value="fmol" />         <!-- Femtomole -->
-      <xs:enumeration value="&#x000B5;mol" /> <!-- Micromole -->
-      <xs:enumeration value="umol" />         <!-- Micromole -->
-      <xs:enumeration value="mmol" />         <!-- Millimole -->
-      <xs:enumeration value="nmol" />         <!-- Nanomole -->
-      <xs:enumeration value="pmol" />         <!-- Picomole -->
+      <xs:enumeration value="fmol" /> <!-- Femtomole -->
+      <xs:enumeration value="μmol" /> <!-- Micromole -->
+      <xs:enumeration value="umol" /> <!-- Micromole -->
+      <xs:enumeration value="mmol" /> <!-- Millimole -->
+      <xs:enumeration value="nmol" /> <!-- Nanomole -->
+      <xs:enumeration value="pmol" /> <!-- Picomole -->
     </xs:restriction>
   </xs:simpleType>
 
@@ -144,7 +144,7 @@
       <xs:enumeration value="KPaA" />          <!-- Kilopascal Absolute -->
       <xs:enumeration value="kgf/cm^2" />      <!-- Kilogram Force per Square Centimeter -->
       <xs:enumeration value="kip/in^2" />      <!-- Kip per Square Inch -->
-      <xs:enumeration value="&#x000B5;torr" /> <!-- MicroTorr -->
+      <xs:enumeration value="μtorr" />         <!-- MicroTorr -->
       <xs:enumeration value="utorr" />         <!-- MicroTorr -->
       <xs:enumeration value="utorr" />         <!-- MilliTorr -->
       <xs:enumeration value="mbar" />          <!-- Millibar -->
@@ -199,79 +199,79 @@
       <xs:enumeration value="ton/yd^3" />  <!-- Ton Long per Cubic Yard -->
       <xs:enumeration value="ton/yd" />    <!-- Ton Short per Cubic Yard -->
       <!-- Extensions -->
-      <xs:enumeration value="fg/fL" />         <!-- Femtogram per Femtoliter -->
-      <xs:enumeration value="fg/L" />          <!-- Femtogram per Liter -->
-      <xs:enumeration value="fg/&#x000B5;L" /> <!-- Femtogram per Microliter -->
-      <xs:enumeration value="fg/uL" />         <!-- Femtogram per Microliter -->
-      <xs:enumeration value="fg/mL" />         <!-- Femtogram per Milliliter -->
-      <xs:enumeration value="fg/nL" />         <!-- Femtogram per Nanoliter -->
-      <xs:enumeration value="fg/pL" />         <!-- Femtogram per Picoliter -->
-      <xs:enumeration value="g/fL" />          <!-- Gram per Femtoliter -->
-      <xs:enumeration value="g/L" />           <!-- Gram per Liter -->
-      <xs:enumeration value="g/&#x000B5;L" />  <!-- Gram per Microliter -->
-      <xs:enumeration value="g/uL" />          <!-- Gram per Microliter -->
-      <xs:enumeration value="g/mL" />          <!--Gram per Milliliter -->
-      <xs:enumeration value="g/nL" />          <!-- Gram per Nanoliter -->
-      <xs:enumeration value="g/pL" />          <!-- Gram per Picoliter -->
-      <xs:enumeration value="kg/fL" />         <!-- Kilogram per Femtoliter -->
-      <xs:enumeration value="kg/L" />          <!-- Kilogram per Liter -->
-      <xs:enumeration value="kg/&#x000B5;L" /> <!-- Kilogram per Microliter -->
-      <xs:enumeration value="kg/uL" />         <!-- Kilogram per Microliter -->
-      <xs:enumeration value="kg/mL" />         <!-- Kilogram per Milliliter -->
-      <xs:enumeration value="kg/nL" />         <!-- Kilogram per Nanoliter -->
-      <xs:enumeration value="kg/pL" />         <!-- Kilogram per Picoliter -->
-      <xs:enumeration value="&#x000B5;g/fL" /> <!-- Microgram per Femtoliter -->
-      <xs:enumeration value="ug/fL" />         <!-- Microgram per Femtoliter -->
-      <xs:enumeration value="&#x000B5;g/L" />  <!-- Microgram per Liter -->
-      <xs:enumeration value="ug/L" />          <!-- Microgram per Liter -->
-      <xs:enumeration value="&#x000B5;g/&#x000B5;L" /> <!-- Microgram per Microliter -->
-      <xs:enumeration value="ug/uL" />         <!-- Microgram per Microliter -->
-      <xs:enumeration value="&#x000B5;g/mL" /> <!-- Microgram per Milliliter -->
-      <xs:enumeration value="ug/mL" />         <!-- Microgram per Milliliter -->
-      <xs:enumeration value="&#x000B5;g/nL" /> <!-- Microgram per Nanoliter -->
-      <xs:enumeration value="ug/nL" />         <!-- Microgram per Nanoliter -->
-      <xs:enumeration value="&#x000B5;g/pL" /> <!-- Microgram per Picoliter -->
-      <xs:enumeration value="ug/pL" />         <!-- Microgram per Picoliter -->
-      <xs:enumeration value="mg/dL" />         <!-- Milligram per Deciliter -->
-      <xs:enumeration value="mg/fL" />         <!-- Milligram per Femtoliter -->
-      <xs:enumeration value="mg/L" />          <!-- Milligram per Liter -->
-      <xs:enumeration value="mg/&#x000B5;L" /> <!-- Milligram per Microliter -->
-      <xs:enumeration value="mg/uL" />         <!-- Milligram per Microliter -->
-      <xs:enumeration value="mg/mL" />         <!-- Milligram per Milliliter -->
-      <xs:enumeration value="mg/nL" />         <!-- Milligram per Nanoliter -->
-      <xs:enumeration value="mg/pL" />         <!-- Milligram per Picoliter -->
-      <xs:enumeration value="ng/fL" />         <!-- Nanogram per Femtoliter -->
-      <xs:enumeration value="ng/L" />          <!-- Nanogram per Liter -->
-      <xs:enumeration value="ng/&#x000B5;L" /> <!-- Nanogram per Microliter -->
-      <xs:enumeration value="ng/uL" />         <!-- Nanogram per Microliter -->
-      <xs:enumeration value="ng/mL" />         <!-- Nanogram per Milliliter -->
-      <xs:enumeration value="ng/nL" />         <!-- Nanogram per Nanoliter -->
-      <xs:enumeration value="ng/pL" />         <!-- Nanogram per Picoliter -->
-      <xs:enumeration value="pg/fL" />         <!-- Picogram per Femtoliter -->
-      <xs:enumeration value="pg/L" />          <!-- Picogram per Liter -->
-      <xs:enumeration value="pg/&#x000B5;L" /> <!-- Picogram per Microliter -->
-      <xs:enumeration value="pg/uL" />         <!-- Picogram per Microliter -->
-      <xs:enumeration value="pg/mL" />         <!-- Picogram per Milliliter -->
-      <xs:enumeration value="pg/nL" />         <!-- Picogram per Nanoliter -->
-      <xs:enumeration value="pg/pL" />         <!-- Picogram per Picoliter -->
+      <xs:enumeration value="fg/fL" /> <!-- Femtogram per Femtoliter -->
+      <xs:enumeration value="fg/L" />  <!-- Femtogram per Liter -->
+      <xs:enumeration value="fg/μL" /> <!-- Femtogram per Microliter -->
+      <xs:enumeration value="fg/uL" /> <!-- Femtogram per Microliter -->
+      <xs:enumeration value="fg/mL" /> <!-- Femtogram per Milliliter -->
+      <xs:enumeration value="fg/nL" /> <!-- Femtogram per Nanoliter -->
+      <xs:enumeration value="fg/pL" /> <!-- Femtogram per Picoliter -->
+      <xs:enumeration value="g/fL" />  <!-- Gram per Femtoliter -->
+      <xs:enumeration value="g/L" />   <!-- Gram per Liter -->
+      <xs:enumeration value="g/μL" />  <!-- Gram per Microliter -->
+      <xs:enumeration value="g/uL" />  <!-- Gram per Microliter -->
+      <xs:enumeration value="g/mL" />  <!--Gram per Milliliter -->
+      <xs:enumeration value="g/nL" />  <!-- Gram per Nanoliter -->
+      <xs:enumeration value="g/pL" />  <!-- Gram per Picoliter -->
+      <xs:enumeration value="kg/fL" /> <!-- Kilogram per Femtoliter -->
+      <xs:enumeration value="kg/L" />  <!-- Kilogram per Liter -->
+      <xs:enumeration value="kg/μL" /> <!-- Kilogram per Microliter -->
+      <xs:enumeration value="kg/uL" /> <!-- Kilogram per Microliter -->
+      <xs:enumeration value="kg/mL" /> <!-- Kilogram per Milliliter -->
+      <xs:enumeration value="kg/nL" /> <!-- Kilogram per Nanoliter -->
+      <xs:enumeration value="kg/pL" /> <!-- Kilogram per Picoliter -->
+      <xs:enumeration value="μg/fL" /> <!-- Microgram per Femtoliter -->
+      <xs:enumeration value="ug/fL" /> <!-- Microgram per Femtoliter -->
+      <xs:enumeration value="μg/L" />  <!-- Microgram per Liter -->
+      <xs:enumeration value="ug/L" />  <!-- Microgram per Liter -->
+      <xs:enumeration value="μg/μL" /> <!-- Microgram per Microliter -->
+      <xs:enumeration value="ug/uL" /> <!-- Microgram per Microliter -->
+      <xs:enumeration value="μg/mL" /> <!-- Microgram per Milliliter -->
+      <xs:enumeration value="ug/mL" /> <!-- Microgram per Milliliter -->
+      <xs:enumeration value="μg/nL" /> <!-- Microgram per Nanoliter -->
+      <xs:enumeration value="ug/nL" /> <!-- Microgram per Nanoliter -->
+      <xs:enumeration value="μg/pL" /> <!-- Microgram per Picoliter -->
+      <xs:enumeration value="ug/pL" /> <!-- Microgram per Picoliter -->
+      <xs:enumeration value="mg/dL" /> <!-- Milligram per Deciliter -->
+      <xs:enumeration value="mg/fL" /> <!-- Milligram per Femtoliter -->
+      <xs:enumeration value="mg/L" />  <!-- Milligram per Liter -->
+      <xs:enumeration value="mg/μL" /> <!-- Milligram per Microliter -->
+      <xs:enumeration value="mg/uL" /> <!-- Milligram per Microliter -->
+      <xs:enumeration value="mg/mL" /> <!-- Milligram per Milliliter -->
+      <xs:enumeration value="mg/nL" /> <!-- Milligram per Nanoliter -->
+      <xs:enumeration value="mg/pL" /> <!-- Milligram per Picoliter -->
+      <xs:enumeration value="ng/fL" /> <!-- Nanogram per Femtoliter -->
+      <xs:enumeration value="ng/L" />  <!-- Nanogram per Liter -->
+      <xs:enumeration value="ng/μL" /> <!-- Nanogram per Microliter -->
+      <xs:enumeration value="ng/uL" /> <!-- Nanogram per Microliter -->
+      <xs:enumeration value="ng/mL" /> <!-- Nanogram per Milliliter -->
+      <xs:enumeration value="ng/nL" /> <!-- Nanogram per Nanoliter -->
+      <xs:enumeration value="ng/pL" /> <!-- Nanogram per Picoliter -->
+      <xs:enumeration value="pg/fL" /> <!-- Picogram per Femtoliter -->
+      <xs:enumeration value="pg/L" />  <!-- Picogram per Liter -->
+      <xs:enumeration value="pg/μL" /> <!-- Picogram per Microliter -->
+      <xs:enumeration value="pg/uL" /> <!-- Picogram per Microliter -->
+      <xs:enumeration value="pg/mL" /> <!-- Picogram per Milliliter -->
+      <xs:enumeration value="pg/nL" /> <!-- Picogram per Nanoliter -->
+      <xs:enumeration value="pg/pL" /> <!-- Picogram per Picoliter -->
     </xs:restriction>
   </xs:simpleType>
 
 
   <xs:simpleType name="unitMolarConcentration">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="mol/m^3" />    <!-- Mole per Cubic Meter -->
+      <xs:enumeration value="mol/m^3" />  <!-- Mole per Cubic Meter -->
       <!-- Extensions -->
-      <xs:enumeration value="fM" />         <!-- Femtomolar -->
-      <xs:enumeration value="&#x000B5;M" /> <!-- Micromolar -->
-      <xs:enumeration value="uM" />         <!-- Micromolar -->
-      <xs:enumeration value="mM" />         <!-- Millimolar -->
-      <xs:enumeration value="mmol/mL" />    <!-- Millimole per Milliliter -->
-      <xs:enumeration value="M" />          <!-- Molar -->
-      <xs:enumeration value="mol/dm^3" />   <!-- Mole per Cubic Decimeter -->
-      <xs:enumeration value="mol/L" />      <!-- Mole per Liter -->
-      <xs:enumeration value="nM" />         <!-- Nanomolar -->
-      <xs:enumeration value="pM" />         <!-- Picomolar -->
+      <xs:enumeration value="fM" />       <!-- Femtomolar -->
+      <xs:enumeration value="μM" />       <!-- Micromolar -->
+      <xs:enumeration value="uM" />       <!-- Micromolar -->
+      <xs:enumeration value="mM" />       <!-- Millimolar -->
+      <xs:enumeration value="mmol/mL" />  <!-- Millimole per Milliliter -->
+      <xs:enumeration value="M" />        <!-- Molar -->
+      <xs:enumeration value="mol/dm^3" /> <!-- Mole per Cubic Decimeter -->
+      <xs:enumeration value="mol/L" />    <!-- Mole per Liter -->
+      <xs:enumeration value="nM" />       <!-- Nanomolar -->
+      <xs:enumeration value="pM" />       <!-- Picomolar -->
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

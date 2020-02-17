@@ -1,5 +1,5 @@
 # Unified Data Model Glossary
-### UDM Version 5.0 Brooklyn
+### UDM Version 6.0
 
 ## 1. Introduction
 
