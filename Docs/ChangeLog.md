@@ -92,7 +92,10 @@ Note
         </TIME>
       </CONDITION_GROUP>
     </CONDITIONS>
-```
+    ```
+
+1. `IDENTIFIERS` renamed to `IDENTIFIER`.
+
 
 ### Other
 
