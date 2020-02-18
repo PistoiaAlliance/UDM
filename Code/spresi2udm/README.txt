@@ -1,16 +1,16 @@
 Sample Python code to convert a SPRESI RD file to the UDM format
 
 Author: jarek.tomczak@pistoiaalliance.org
-Date:   15 November 2018
+Date:   18 February 2020
 
 
 Introduction
 ------------
 
 This package contains Python 3 code used to convert a sample SPRESI RD file to
-the UDM format 5.0 (Brooklyn).  The code was written for this particular
-conversion and doesn't pretend to be generic to handle e.g. all variations of
-existing RD files.
+the UDM format 6.0.  The code was written for this particular conversion and
+doesn't pretend to be generic to handle e.g. all variations of existing RD
+files.
 
 
 Contents

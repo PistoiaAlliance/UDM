@@ -52,7 +52,8 @@
         <xs:element ref="CITATIONS" minOccurs="0"/>
         <xs:element ref="MOLECULES"/>
         <xs:element ref="REACTIONS"/>
-        <xs:element name="EHS" minOccurs="0" />
+        <!-- Placeholder for reaction routes. -->
+        <xs:element name="ROUTES" minOccurs="0" />
       </xs:sequence>
       <xs:attribute name="DATABASE" type="xs:string" use="required"/>
       <xs:attribute name="SEQUENCE" type="xs:nonNegativeInteger" use="required"/>
