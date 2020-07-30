@@ -2,9 +2,7 @@
 <!--
 
     Pistoia Alliance UDM XML Schema.
-
     Copyright (c) Pistoia Alliance, 2018-2020.
-
     Licensor hereby grants you the right, without charge, on a perpetual,
     non-exclusive and worldwide basis, to utilize this UDM XML Schema
     Definition (and the UDM File Format based on it) for the purpose of
@@ -20,28 +18,23 @@
     provided that such requirements still validate against the UDM XML schema.
     For the avoidance of doubt, products implementing this Definition are not
     deemed to be derivative works of the UDM XML Schema Definition.
-
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="6.0.0">
-
   <!--
       The countries, methods, reaction classes, result types and units UDM
       vocabularies are defined in as separate files to minimise changes in the
       main UDM XML schema file between version 5.x and 6.x.
-
       The individual methods are from Allotrope Foundation Taxonomies (AFT)
       and on based preferred labels for physical characterization assay
       entities:
        * AFO-2019_09/afo/voc/afo/WD/2019/09/aft.ttl
-
       We use the working draft version of the AFT instead of the recommended
       one for 2019-09 to preserve the same version as for the methods
       vocabulary.
     -->
-
   <xs:simpleType name="resultType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Auger spectrum" />
@@ -64,12 +57,10 @@
       <xs:enumeration value="calibration curve" />
       <xs:enumeration value="calibration spectrum" />
       <xs:enumeration value="chromatogram" />
-      <xs:enumeration value="chromatogram" />
       <xs:enumeration value="circular dichroism spectrum" />
       <xs:enumeration value="conversion spectrum" />
       <xs:enumeration value="corrected emission spectrum" />
       <xs:enumeration value="derivative spectrum" />
-      <xs:enumeration value="diagnostic trace" />
       <xs:enumeration value="diagnostic trace" />
       <xs:enumeration value="differential scanning calorimetry curve" />
       <xs:enumeration value="diffuse reflectance spectrum" />
